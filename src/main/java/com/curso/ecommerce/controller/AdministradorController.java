@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.curso.ecommerce.model.Orden;
-import com.curso.ecommerce.model.Producto;
+import com.curso.ecommerce.model.Servicio;
 import com.curso.ecommerce.service.IOrdenService;
 import com.curso.ecommerce.service.IUsuarioService;
 import com.curso.ecommerce.service.ProductoService;
@@ -22,7 +22,7 @@ import com.curso.ecommerce.service.ProductoService;
 public class AdministradorController {
 
 	@Autowired
-	private ProductoService productoService;
+	private ServicioService servicioService;
 	
 	@Autowired
 	private IUsuarioService usuarioService;

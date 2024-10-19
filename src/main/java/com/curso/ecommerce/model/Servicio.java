@@ -8,8 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "productos")
-public class Producto {
+@Table(name = "servicios")
+public class Servicio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -22,12 +22,12 @@ public class Producto {
 	@ManyToOne
 	private Usuario usuario;
 	
-	public Producto() {
+	public Servicio() {
 
 	}
 
 	
-	public Producto(Integer id, String nombre, String descripcion, String imagen, double precio, int cantidad,
+	public Servicio(Integer id, String nombre, String descripcion, String imagen, double precio, int cantidad,
 			Usuario usuario) {
 		super();
 		this.id = id;
@@ -101,7 +101,7 @@ public class Producto {
 
 	@Override
 	public String toString() {
-		return "Producto [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", imagen=" + imagen
+		return "Servicio [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", imagen=" + imagen
 				+ ", precio=" + precio + ", cantidad=" + cantidad + "]";
 	}
 	
