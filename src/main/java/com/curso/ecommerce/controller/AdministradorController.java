@@ -15,7 +15,7 @@ import com.curso.ecommerce.model.Orden;
 import com.curso.ecommerce.model.Servicio;
 import com.curso.ecommerce.service.IOrdenService;
 import com.curso.ecommerce.service.IUsuarioService;
-import com.curso.ecommerce.service.ProductoService;
+import com.curso.ecommerce.service.ServicioService;
 
 @Controller
 @RequestMapping("/administrador")
@@ -35,8 +35,8 @@ public class AdministradorController {
 	@GetMapping("")
 	public String home(Model model) {
 
-		List<Producto> productos = productoService.findAll();
-		model.addAttribute("productos", productos);
+		List<Servicio> servicios = servicioService.findAll();
+		model.addAttribute("servicios", servicios);
 
 
 		return "administrador/home";

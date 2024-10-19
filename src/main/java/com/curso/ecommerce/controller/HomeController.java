@@ -22,12 +22,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.curso.ecommerce.model.DetalleOrden;
 import com.curso.ecommerce.model.Orden;
-import com.curso.ecommerce.model.Producto;
+import com.curso.ecommerce.model.Servicio;
 import com.curso.ecommerce.model.Usuario;
 import com.curso.ecommerce.service.IDetalleOrdenService;
 import com.curso.ecommerce.service.IOrdenService;
 import com.curso.ecommerce.service.IUsuarioService;
-import com.curso.ecommerce.service.ProductoService;
+import com.curso.ecommerce.service.ServicioService;
+import com.curso.ecommerce.service.ServicioServiceImpl;
+
 
 @Controller
 @RequestMapping("/")
@@ -36,7 +38,7 @@ public class HomeController {
 	private final Logger log = LoggerFactory.getLogger(HomeController.class);
 
 	@Autowired
-	private ProductoService productoService;
+	private ServicioService servicioService;
 	
 	@Autowired
 	private IUsuarioService usuarioService;
@@ -59,7 +61,7 @@ public class HomeController {
 		
 		log.info("Sesion del usuario: {}", session.getAttribute("idusuario"));
 		
-		model.addAttribute("productos", productoService.findAll());
+		model.addAttribute("productos", servicioService.findAll());
 		
 		//session
 		model.addAttribute("sesion", session.getAttribute("idusuario"));
@@ -69,36 +71,35 @@ public class HomeController {
 
 	@GetMapping("productohome/{id}")
 	public String productoHome(@PathVariable Integer id, Model model) {
-		log.info("Id producto enviado como parámetro {}", id);
-		Producto producto = new Producto();
-		Optional<Producto> productoOptional = productoService.get(id);
-		producto = productoOptional.get();
+		log.info("Id servicio enviado como parámetro {}", id);
+		Servicio servicio = new Servicio();
+		Optional<Servicio> servicioOptional = servicioService.get(id);
+		servicio = servicioOptional.get();
 
-		model.addAttribute("producto", producto);
+		model.addAttribute("servicio", servicio);
 
-		return "usuario/productohome";
+		return "usuario/serviciohome";
 	}
 
 	@PostMapping("/cart")
 	public String addCart(@RequestParam Integer id, @RequestParam Integer cantidad, Model model) {
 		DetalleOrden detalleOrden = new DetalleOrden();
-		Producto producto = new Producto();
+		Servicio servicio = new Servicio();
 		double sumaTotal = 0;
 
-		Optional<Producto> optionalProducto = productoService.get(id);
-		log.info("Producto añadido: {}", optionalProducto.get());
+		Optional<Servicio> optionalServicio = servicioService.get(id);
+		log.info("Servicio añadido: {}", optionalServicio.get());
 		log.info("Cantidad: {}", cantidad);
-		producto = optionalProducto.get();
+		servicio = optionalServicio.get();
 
-		detalleOrden.setCantidad(cantidad);
-		detalleOrden.setPrecio(producto.getPrecio());
-		detalleOrden.setNombre(producto.getNombre());
-		detalleOrden.setTotal(producto.getPrecio() * cantidad);
-		detalleOrden.setProducto(producto);
+		detalleOrden.setPrecio(servicio.getPrecio());
+		detalleOrden.setNombre(servicio.getNombre());
+		detalleOrden.setTotal(servicio.getPrecio() * cantidad);
+		detalleOrden.setServicio(servicio);
 		
-		//validar que le producto no se añada 2 veces
-		Integer idProducto=producto.getId();
-		boolean ingresado=detalles.stream().anyMatch(p -> p.getProducto().getId()==idProducto);
+		//validar que el servicio no se añada 2 veces
+		Integer idServicio=servicio.getId();
+		boolean ingresado=detalles.stream().anyMatch(p -> p.getServicio().getId()==idServicio);
 		
 		if (!ingresado) {
 			detalles.add(detalleOrden);
@@ -121,12 +122,12 @@ public class HomeController {
 		List<DetalleOrden> ordenesNueva = new ArrayList<DetalleOrden>();
 
 		for (DetalleOrden detalleOrden : detalles) {
-			if (detalleOrden.getProducto().getId() != id) {
+			if (detalleOrden.getServicio().getId() != id) {
 				ordenesNueva.add(detalleOrden);
 			}
 		}
 
-		// poner la nueva lista con los productos restantes
+		// poner la nueva lista con los servicios restantes
 		detalles = ordenesNueva;
 
 		double sumaTotal = 0;
@@ -190,9 +191,9 @@ public class HomeController {
 	
 	@PostMapping("/search")
 	public String searchProduct(@RequestParam String nombre, Model model) {
-		log.info("Nombre del producto: {}", nombre);
-		List<Producto> productos= productoService.findAll().stream().filter( p -> p.getNombre().contains(nombre)).collect(Collectors.toList());
-		model.addAttribute("productos", productos);		
+		log.info("Nombre del servicio: {}", nombre);
+		List<Servicio> servicios= servicioService.findAll().stream().filter( p -> p.getNombre().contains(nombre)).collect(Collectors.toList());
+		model.addAttribute("servicios", servicios);
 		return "usuario/home";
 	}
 
