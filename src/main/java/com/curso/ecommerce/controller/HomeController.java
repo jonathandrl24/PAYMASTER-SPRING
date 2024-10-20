@@ -61,7 +61,7 @@ public class HomeController {
 		
 		log.info("Sesion del usuario: {}", session.getAttribute("idusuario"));
 		
-		model.addAttribute("productos", servicioService.findAll());
+		model.addAttribute("servicios", servicioService.findAll());
 		
 		//session
 		model.addAttribute("sesion", session.getAttribute("idusuario"));
@@ -69,8 +69,8 @@ public class HomeController {
 		return "usuario/home";
 	}
 
-	@GetMapping("productohome/{id}")
-	public String productoHome(@PathVariable Integer id, Model model) {
+	@GetMapping("serviciohome/{id}")
+	public String servicioHome(@PathVariable Integer id, Model model) {
 		log.info("Id servicio enviado como parámetro {}", id);
 		Servicio servicio = new Servicio();
 		Optional<Servicio> servicioOptional = servicioService.get(id);
@@ -114,9 +114,9 @@ public class HomeController {
 		return "usuario/carrito";
 	}
 
-	// quitar un producto del carrito
+	// quitar un servicio del carrito
 	@GetMapping("/delete/cart/{id}")
-	public String deleteProductoCart(@PathVariable Integer id, Model model) {
+	public String deleteServicioCart(@PathVariable Integer id, Model model) {
 
 		// lista nueva de prodcutos
 		List<DetalleOrden> ordenesNueva = new ArrayList<DetalleOrden>();

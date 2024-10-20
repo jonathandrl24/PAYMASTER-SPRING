@@ -97,7 +97,7 @@ public class Usuario {
 		return servicios;
 	}
 
-	public void setServicios(List<Servicio> productos) {
+	public void setServicios(List<Servicio> servicios) {
 		this.servicios = servicios;
 	}
 
