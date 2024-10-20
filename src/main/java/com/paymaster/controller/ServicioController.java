@@ -51,19 +51,15 @@ public class ServicioController {
 	@PostMapping("/save")
 	public String save(Servicio servicio, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
 		LOGGER.info("Este es el objeto servicio {}",servicio);
-		
-		
 		Usuario u= usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString() )).get();
 		servicio.setUsuario(u);
-		
-		//imagen
+		// guardar imagen al crear producto
 		if (servicio.getId()==null) { // cuando se crea un producto
 			String nombreImagen= upload.saveImage(file);
 			servicio.setImagen(nombreImagen);
 		}else {
 			
 		}
-		
 		servicioService.save(servicio);
 		return "redirect:/servicios";
 	}
@@ -113,7 +109,7 @@ public class ServicioController {
 		}
 		
 		servicioService.delete(id);
-		return "redirect:/productos";
+		return "redirect:/servicios";
 	}
 	
 	

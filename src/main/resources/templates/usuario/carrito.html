@@ -51,18 +51,16 @@
 								<tr>
 									<th scope="col">Producto</th>
 									<th scope="col">Precio</th>
-									<th scope="col">Cantidad</th>
 									<th scope="col">Total</th>
 									<th scope="col">Acción</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="dorden:${cart}">
-									<td th:text="${dorden.nombre}"></td>
-									<td th:text="${dorden.precio}"></td>
-									<td th:text="${dorden.cantidad}"></td>
-									<td th:text="${dorden.total}"></td>
-									<td><a th:href="@{/delete/cart/{id}   (id=${dorden.producto.id}) }" class="btn btn-danger">Quitar</a></td>
+								<tr th:each="orden:${cart}">
+									<td th:text="${orden.nombre}"></td>
+									<td th:text="${orden.precio}"></td>
+									<td th:text="${orden.total}"></td>
+									<td><a th:href="@{/delete/cart/{id}   (id=${orden.servicio.id}) }" class="btn btn-danger">Quitar</a></td>
 								</tr>
 							</tbody>
 						</table>

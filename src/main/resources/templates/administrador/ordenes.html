@@ -55,11 +55,11 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="orden:${ordenes}">
-									<td th:text="${orden.numero}"></td>
-									<td th:text="${orden.fechaCreacion}"></td>
-									<td th:text="${orden.total}"></td>
-									<td><a th:href="@{/administrador/detalle/{id} (id=${orden.id}) }" class="btn btn-success">Ver
+								<tr th:each="dorden:${ordenes}">
+									<td th:text="${dorden.numero}"></td>
+									<td th:text="${dorden.fechaCreacion}"></td>
+									<td th:text="${dorden.total}"></td>
+									<td><a th:href="@{/administrador/detalle/{id} (id=${dorden.id}) }" class="btn btn-success">Ver
 											Detalle</a></td>
 								</tr>
 							</tbody>
