@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.curso.ecommerce</groupId>
-	<artifactId>spring-ecommerce</artifactId>
+	<artifactId>PAYMASTER-SPRING-BOOT</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-ecommerce</name>
 	<description>Curso de Spring proyecto ecommerce</description>
