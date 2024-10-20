@@ -1,0 +1,26 @@
+body {
+  padding-bottom: 20px;
+  color: #000000;
+}
+
+.navbar {
+  margin-bottom: 20px;
+  color: #000000;
+}
+
+.bg-dark {
+  background: #100094 !important;
+  border-color: #000000 !important;
+}
+
+.btn-outline-success:hover {
+  border-color: #000000 !important;
+  background: rgb(220, 220, 220) !important;
+  color: #000000 !important;
+  
+}
+.btn-outline-success {
+  border-color: #f4f4f4 !important;
+  background: transparent !important;
+  color: white !important;
+}

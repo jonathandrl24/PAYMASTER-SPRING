@@ -2,22 +2,22 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="generator" content="Hugo 0.84.0">
+	<title>Paymaster | Home</title>
 
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
+	<!-- Bootstrap core CSS -->
+	<link th:href="@{css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-<title>Spring eCommerce</title>
+	<!-- Custom styles for this template -->
+	<link th:href="@{css/carousel.css}" rel="stylesheet">
+	<link th:href="@{css/style.css}" rel="stylesheet">
+	<link th:href="@{css/navbar.css}" rel="stylesheet">
 
 
-<!-- Bootstrap core CSS -->
-<link th:href="@{vendor/bootstrap/css/bootstrap.min.css}"
-	rel="stylesheet">
-
-<!-- Custom styles for this template -->
-<link th:href="@{css/heroic-features.css}" rel="stylesheet">
 
 </head>
 
@@ -29,13 +29,66 @@
 	
 	<div th:include="usuario/template_usuario.html::header-user" th:unless="${sesion==null}"> </div>
 
+	<!-- carousel-->
+
 	<!-- Page Content -->
 	<div class="container">
 
 		<!-- Jumbotron Header -->
 		<header class="jumbotron my-4">
-			<h1 class="display-3">Bienvenido a Spring Ecommerce 2021</h1>
-			<p class="lead">Tu tienda de productos en Línea</p>
+			<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+				<div class="carousel-indicators">
+					<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+					<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+				</div>
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<div class="overlay"></div> <!-- Superposición oscura -->
+						<img src="imagenes/fotor-20240809184810.jpg" class="img-fluid" alt="maquina excavadora">
+
+						<div class="container">
+							<div class="carousel-caption text-start">
+								<h1>PAYMASTER</h1>
+								<p>Expertos en servicios de construcción para todas sus necesidades.</p>
+								<p><a class="btn btn-lg btn-primary" href="registrarse.html">Registrarse</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="overlay"></div> <!-- Superposición oscura -->
+						<img src="imagenes/fotor-ai-2024080918538.jpg" class="img-fluid" alt="sitio de construcción">
+
+						<div class="container">
+							<div class="carousel-caption">
+								<h1>Solidez y confianza en cada proyecto</h1>
+								<p>Aseguramos construcciones robustas y relaciones basadas en la integridad.</p>
+								<p><a class="btn btn-lg btn-primary" href="iniciarSesion.html">Iniciar Sesion</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="overlay"></div> <!-- Superposición oscura -->
+						<img src="imagenes/ciudad.jpg" class="img-fluid" alt="ciudad" width="100%" height="100%">
+
+						<div class="container">
+							<div class="carousel-caption text-end">
+								<h1>Expertos en hacer realidad tus ideas</h1>
+								<p>Superando tus expectativas con soluciones innovadoras y personalizadas.</h1>
+								<p><a class="btn btn-lg btn-primary" href="servicios.html">Ver Servicios</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
 		</header>
 
 		<!-- Page Features -->
@@ -66,8 +119,8 @@
 	</div>
 
 	<!-- Bootstrap core JavaScript -->
-	<script th:src="@{vendor/jquery/jquery.min.js}"></script>
-	<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 
 </body>
 
