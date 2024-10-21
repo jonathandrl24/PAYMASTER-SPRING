@@ -11,5 +11,4 @@ public interface ServicioService {
 	public void update(Servicio servicio);
 	public void delete(Integer id);
 	public List<Servicio> findAll();
-
 }

@@ -1,10 +1,13 @@
 package com.paymaster.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +19,7 @@ import com.paymaster.model.Servicio;
 import com.paymaster.service.IOrdenService;
 import com.paymaster.service.IUsuarioService;
 import com.paymaster.service.ServicioService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/administrador")
@@ -29,7 +33,8 @@ public class AdministradorController {
 	
 	@Autowired
 	private IOrdenService ordensService;
-	
+
+
 	private Logger logg= LoggerFactory.getLogger(AdministradorController.class);
 
 	@GetMapping("")
@@ -62,6 +67,34 @@ public class AdministradorController {
 		model.addAttribute("detalles", orden.getDetalle());
 		
 		return "administrador/detalleorden";
+	}
+
+	//(ELIMINAR TODO ABAJO SI NO FUNCIONA)
+	// Endpoint para obtener ganancias totales
+	@GetMapping("/ganancias")
+	public ResponseEntity<Double> obtenerGananciasTotales() {
+		double ganancias = ordensService.calcularGananciasTotales();
+		return ResponseEntity.ok(ganancias);
+	}
+
+	// Endpoint para obtener ganancias por un período
+	@GetMapping("/ganancias/periodo")
+	public ResponseEntity<Double> obtenerGananciasPorPeriodo(@RequestParam("inicio") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio,
+															 @RequestParam("fin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFin) {
+		double ganancias = ordensService.calcularGananciasPorPeriodo(fechaInicio, fechaFin);
+		return ResponseEntity.ok(ganancias);
+	}
+
+	@GetMapping("/dashboard")
+	public String getDashboard(Model model) {
+		double gananciasTotales = ordensService.calcularGananciasTotales();
+		List<Orden> ordenesRecientes = ordensService.obtenerOrdenesRecientes();
+
+		// Pasar los datos al modelo para que sean utilizados en la vista
+		model.addAttribute("gananciasTotales", gananciasTotales);
+		model.addAttribute("ordenesRecientes", ordenesRecientes);
+
+		return "administrador/dashboard"; // la vista estará en templates/administrador/dashboard.html
 	}
 	
 	
