@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Spring eCommerce</title>
+<title>Paymaster</title>
 
 
 <!-- Bootstrap core CSS -->
@@ -32,12 +32,12 @@
 
 		<!-- Page Heading/Breadcrumbs -->
 		<h1 class="mt-4 mb-3">
-			Spring eCommerce <small>Producto</small>
+			Paymaster <small>Servicio</small>
 		</h1>
 
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-			<li class="breadcrumb-item active">Producto</li>
+			<li class="breadcrumb-item active">Servicio</li>
 		</ol>
 
 		<!-- Blog Post -->
@@ -60,7 +60,7 @@
 									<p th:text=" 'Descripción: '+ ${servicio.descripcion} "></p>
 								</li>
 								<li class="list-group-item"><h6>
-										Cantidad: <input type="number" id="cantidad" name="cantidad"
+										Disponibilidad: <input type="number" id="cantidad" name="cantidad"
 											autocomplete="off" min="1" max="5" value="1">
 									</h6></li>
 							</ul>

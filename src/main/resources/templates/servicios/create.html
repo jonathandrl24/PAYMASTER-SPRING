@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Spring eCommerce</title>
+  <title>Paymaster</title>
 
 
   <!-- Bootstrap core CSS -->
@@ -30,37 +30,37 @@
 
   <!-- Page Heading/Breadcrumbs -->
   <h1 class="mt-4 mb-3">
-    Spring eCommerce <small>Productos</small>
+    Paymaster <small>Servicios</small>
   </h1>
 
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-    <li class="breadcrumb-item active">Crear Productos</li>
+    <li class="breadcrumb-item"><a th:href="@{/administrador}">Home</a></li>
+    <li class="breadcrumb-item active">Crear Servicio</li>
   </ol>
 
-  <h2>Crear Producto</h2>
+  <h2>Crear Servicio</h2>
   <form class="form-horizontal" th:action="@{/servicios/save}" method="post" enctype="multipart/form-data">
     <div class="form-group">
       <label class="control-label col-sm-2" for="nombre">Nombre:</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="nombre" name="nombre"
-        placeholder="Ingrese el nombre del producto" autocomplete="off" required>
+        placeholder="Ingrese el nombre del servicio" autocomplete="off" required>
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-2" for="descripcion">Descripción:</label>
       <div class="col-sm-10">
         <textarea class="form-control" id="descripcion" name="descripcion"
-        placeholder="Ingrese la descripcion del producto" required
+        placeholder="Ingrese la descripcion del servicio" required
         autocomplete="off"> </textarea>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="control-label col-sm-2" for="cantidad">Cantidad:</label>
+      <label class="control-label col-sm-2" for="cantidad">Disponibilidad:</label>
       <div class="col-sm-10">
         <input type="number" class="form-control" id="cantidad"
-        name="cantidad" placeholder="Ingrese la cantidad del producto"
+        name="cantidad" placeholder="Ingrese la disponibilidad del servicio"
         required autocomplete="off">
       </div>
     </div>
@@ -69,7 +69,7 @@
       <label class="control-label col-sm-2" for="precio">Precio:</label>
       <div class="col-sm-10">
         <input type="number" class="form-control" step="any" id="precio" name="precio"
-        placeholder="Ingrese el precio del producto" autocomplete="off" required>
+        placeholder="Ingrese el precio del servicio" autocomplete="off" required>
       </div>
     </div>
 

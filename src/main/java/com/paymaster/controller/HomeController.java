@@ -78,7 +78,7 @@ public class HomeController {
 
 		return "usuario/serviciohome";
 	}
-
+	//Añadir al carrito
 	@PostMapping("/cart")
 	public String addCart(@RequestParam Integer id, @RequestParam Integer cantidad, Model model) {
 		DetalleOrden detalleOrden = new DetalleOrden();
@@ -116,7 +116,7 @@ public class HomeController {
 	@GetMapping("/delete/cart/{id}")
 	public String deleteServicioCart(@PathVariable Integer id, Model model) {
 
-		// lista nueva de prodcutos
+		// lista nueva de servicios
 		List<DetalleOrden> ordenesNueva = new ArrayList<DetalleOrden>();
 
 		for (DetalleOrden detalleOrden : detalles) {
@@ -148,7 +148,7 @@ public class HomeController {
 		model.addAttribute("sesion", session.getAttribute("idusuario"));
 		return "/usuario/carrito";
 	}
-	
+	//resumen de orden
 	@GetMapping("/order")
 	public String order(Model model, HttpSession session) {
 		
@@ -186,7 +186,7 @@ public class HomeController {
 		
 		return "redirect:/";
 	}
-	
+	//Funcionalidad para buscar un servicio por nombre
 	@PostMapping("/search")
 	public String searchProduct(@RequestParam String nombre, Model model) {
 		log.info("Nombre del servicio: {}", nombre);

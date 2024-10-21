@@ -36,25 +36,25 @@ public class ServicioController {
 	
 	@Autowired
 	private UploadFileService upload;
-	
+	//mostrar servicios
 	@GetMapping("")
 	public String show(Model model) {
 		model.addAttribute("servicios", servicioService.findAll());
 		return "servicios/show";
 	}
-	
+	//crear un servicio
 	@GetMapping("/create")
 	public String create() {
 		return "servicios/create";
 	}
-	
+	//guardar servicio
 	@PostMapping("/save")
 	public String save(Servicio servicio, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
 		LOGGER.info("Este es el objeto servicio {}",servicio);
 		Usuario u= usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString() )).get();
 		servicio.setUsuario(u);
-		// guardar imagen al crear producto
-		if (servicio.getId()==null) { // cuando se crea un producto
+		// guardar imagen al crear un servicio
+		if (servicio.getId()==null) {
 			String nombreImagen= upload.saveImage(file);
 			servicio.setImagen(nombreImagen);
 		}else {
@@ -63,7 +63,7 @@ public class ServicioController {
 		servicioService.save(servicio);
 		return "redirect:/servicios";
 	}
-	
+	//editar servicio
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable Integer id, Model model) {
 		Servicio servicio= new Servicio();
@@ -75,16 +75,16 @@ public class ServicioController {
 		
 		return "servicios/edit";
 	}
-	
+	//actualizar cambios al editar servicio
 	@PostMapping("/update")
 	public String update(Servicio servicio, @RequestParam("img") MultipartFile file ) throws IOException {
 		Servicio p= new Servicio();
 		p=servicioService.get(servicio.getId()).get();
 		
-		if (file.isEmpty()) { // se edita el producto pero no se cambia la imagem
+		if (file.isEmpty()) { // se edita el servicio pero no se cambia la imagem
 			
 			servicio.setImagen(p.getImagen());
-		}else {// cuando se edita tbn la imagen			
+		}else {// cuando se edita tambien la imagen
 			//eliminar cuando no sea la imagen por defecto
 			if (!p.getImagen().equals("default.jpg")) {
 				upload.deleteImage(p.getImagen());
@@ -96,7 +96,7 @@ public class ServicioController {
 		servicioService.update(servicio);
 		return "redirect:/servicios";
 	}
-	
+	// eliminar servicio
 	@GetMapping("/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 		
