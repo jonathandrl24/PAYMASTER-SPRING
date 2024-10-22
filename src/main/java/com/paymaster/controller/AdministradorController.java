@@ -2,6 +2,7 @@ package com.paymaster.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,16 +11,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.paymaster.model.Orden;
 import com.paymaster.model.Servicio;
 import com.paymaster.service.IOrdenService;
 import com.paymaster.service.IUsuarioService;
 import com.paymaster.service.ServicioService;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/administrador")
@@ -33,7 +31,6 @@ public class AdministradorController {
 	
 	@Autowired
 	private IOrdenService ordensService;
-
 
 	private Logger logg= LoggerFactory.getLogger(AdministradorController.class);
 
@@ -69,7 +66,7 @@ public class AdministradorController {
 		return "administrador/detalleorden";
 	}
 
-	//(ELIMINAR TODO ABAJO SI NO FUNCIONA)
+	// IMPLEMENTACION DASHBOARD
 	// Endpoint para obtener ganancias totales
 	@GetMapping("/ganancias")
 	public ResponseEntity<Double> obtenerGananciasTotales() {
@@ -96,6 +93,21 @@ public class AdministradorController {
 
 		return "administrador/dashboard"; // la vista estará en templates/administrador/dashboard.html
 	}
-	
-	
+
+	//ELIMINAR TODO ABAJO SI SALE MAL
+	// Actualizar método de pago para una orden
+	@PostMapping("/actualizarMetodoPago")
+	public String actualizarMetodoPago(@RequestParam("ordenId") Integer ordenId, @RequestParam("metodoPago") String metodoPago, @RequestParam String datosPago) {
+		ordensService.actualizarMetodoPago(ordenId, metodoPago, datosPago);
+		return "redirect:/admin/ordenes";  // Redirecciona a la página de órdenes
+	}
+
+	// Actualizar estado del pago para una orden
+	@PostMapping("/actualizarEstadoPago")
+	public String actualizarEstadoPago(@RequestParam("ordenId") Integer ordenId,
+									   @RequestParam("estadoPago") String estadoPago) {
+		ordensService.actualizarEstadoPago(ordenId, estadoPago);
+		return "redirect:/admin/ordenes";  // Redirecciona a la página de órdenes
+	}
+
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.paymaster.model.MetodoPago;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,10 @@ public class OrdenServiceImpl implements IOrdenService {
 	
 	@Autowired
 	private IOrdenRepository ordenRepository;
+
+	// ElIMINAR SI TODO SALE MAL
+	@Autowired
+	private ValidacionPagoServiceImpl validacionPagoService;
 
 	@Override
 	public Orden save(Orden orden) {
@@ -68,15 +73,13 @@ public class OrdenServiceImpl implements IOrdenService {
 		return ordenRepository.findById(id);
 	}
 
-	//(Eliminar todo abajo si sale mal)
 	// Método para obtener las ganancias totales
 	public double calcularGananciasTotales() {
-		List<Orden> ordenesCompletadas = ordenRepository.findAll(); // Dependiendo de tu implementación, podrías filtrar por estado 'completado'
+		List<Orden> ordenesCompletadas = ordenRepository.findAll(); // podría filtrar por estado 'completado'
 		return ordenesCompletadas.stream()
 				.mapToDouble(Orden::getTotal) // Sumando el total de cada orden
 				.sum();
 	}
-
 	// Método para obtener las ganancias por un período (opcional)
 	public double calcularGananciasPorPeriodo(Date fechaInicio, Date fechaFin) {
 		List<Orden> ordenesEnPeriodo = ordenRepository.findByFechaCreacionBetween(fechaInicio, fechaFin);
@@ -90,4 +93,37 @@ public class OrdenServiceImpl implements IOrdenService {
 		return ordenRepository.findTop5ByOrderByFechaCreacionDesc();
 	}
 
+	//(Eliminar todo abajo si sale mal)
+	// Actualizar el estado del pago para una orden
+	@Override
+	public void actualizarEstadoPago(Integer ordenId, String estadoPago) {
+		Optional<Orden> ordenOpt = ordenRepository.findById(ordenId);
+		if (ordenOpt.isPresent()) {
+			Orden orden = ordenOpt.get();
+			orden.setEstadoPago(estadoPago);
+			ordenRepository.save(orden);
+		}
+	}
+
+	@Override
+	public void actualizarMetodoPago(Integer ordenId, String metodoPago, String datosPago) {
+		Optional<Orden> ordenOpt = ordenRepository.findById(ordenId);
+		if (ordenOpt.isPresent()) {
+			Orden orden = ordenOpt.get();
+
+			// Convierte el string a MetodoPago enum
+			MetodoPago metodoPagoEnum = MetodoPago.valueOf(metodoPago.toUpperCase());
+
+			// Valida los datos de pago antes de actualizar
+			boolean pagoValido = validacionPagoService.validarDatosPago(metodoPagoEnum, datosPago);
+			if (!pagoValido) {
+				throw new IllegalArgumentException("Datos de pago no válidos para el método seleccionado.");
+			}
+
+			orden.setMetodoPago(metodoPagoEnum.toString());  // Convierte el enum a String
+			ordenRepository.save(orden);
+		}
+	}
+
 }
+

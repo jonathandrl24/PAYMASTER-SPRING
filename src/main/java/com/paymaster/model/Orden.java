@@ -3,13 +3,7 @@ package com.paymaster.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "ordenes")
@@ -19,27 +13,31 @@ public class Orden {
 	private Integer id;
 	private String numero;
 	private Date fechaCreacion;
-	private Date fechaRecibida;
 
 	private double total;
+	//(ELIMINAR SI SALE MAL)
+	@Enumerated(EnumType.STRING)  // Guarda el método de pago como una cadena de texto
+	private MetodoPago metodoPago; // Método de pago (tarjeta, transferencia, etc.)
+	private String estadoPago;  // Estado del pago (opcional)
 	
 	@ManyToOne
 	private Usuario usuario;
 	
 	@OneToMany(mappedBy = "orden")
 	private List<DetalleOrden> detalle;
-	
+
 	public Orden() {
 	
 	}
 
-	public Orden(Integer id, String numero, Date fechaCreacion, Date fechaRecibida, double total) {
+	public Orden(Integer id, String numero, Date fechaCreacion, double total, String metodoPago, String estadoPago) {
 		super();
 		this.id = id;
 		this.numero = numero;
 		this.fechaCreacion = fechaCreacion;
-		this.fechaRecibida = fechaRecibida;
 		this.total = total;
+		this.metodoPago = MetodoPago.valueOf(metodoPago);
+		this.estadoPago = estadoPago;
 	}
 
 	public Integer getId() {
@@ -66,13 +64,6 @@ public class Orden {
 		this.fechaCreacion = fechaCreacion;
 	}
 
-	public Date getFechaRecibida() {
-		return fechaRecibida;
-	}
-
-	public void setFechaRecibida(Date fechaRecibida) {
-		this.fechaRecibida = fechaRecibida;
-	}
 
 	public double getTotal() {
 		return total;
@@ -81,7 +72,22 @@ public class Orden {
 	public void setTotal(double total) {
 		this.total = total;
 	}
-	
+
+	public MetodoPago getMetodoPago() {
+		return metodoPago;
+	}
+
+	public void setMetodoPago(String metodoPago) {
+		this.metodoPago = MetodoPago.valueOf(metodoPago);
+	}
+
+	public String getEstadoPago() {
+		return estadoPago;
+	}
+
+	public void setEstadoPago(String estadoPago) {
+		this.estadoPago = estadoPago;
+	}
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -102,8 +108,7 @@ public class Orden {
 
 	@Override
 	public String toString() {
-		return "Orden [id=" + id + ", numero=" + numero + ", fechaCreacion=" + fechaCreacion + ", fechaRecibida="
-				+ fechaRecibida + ", total=" + total + "]";
+		return "Orden [id=" + id + ", numero=" + numero + ", fechaCreacion=" + fechaCreacion + ", metodoPago=" + metodoPago + ", estadoPago=" + estadoPago + ", total=" + total + "]";
 	}
 	
 
