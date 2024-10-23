@@ -19,7 +19,9 @@ public class Orden {
 	@Enumerated(EnumType.STRING)  // Guarda el método de pago como una cadena de texto
 	private MetodoPago metodoPago; // Método de pago (tarjeta, transferencia, etc.)
 	private String estadoPago;  // Estado del pago (opcional)
-	
+	private String paymentId;
+	private String payerId;
+
 	@ManyToOne
 	private Usuario usuario;
 	
@@ -104,6 +106,21 @@ public class Orden {
 
 	public void setDetalle(List<DetalleOrden> detalle) {
 		this.detalle = detalle;
+	}
+
+	public String getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(String paymentId) {
+		this.paymentId = paymentId;
+	}
+
+	public String getPayerId() {
+		return payerId;
+	}
+	public void setPayerId(String payerId) {
+		this.payerId = payerId;
 	}
 
 	@Override
