@@ -20,6 +20,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.paymaster.service.PaypalService;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.PayPalRESTException;
+
+
 import com.paymaster.model.DetalleOrden;
 import com.paymaster.model.Orden;
 import com.paymaster.model.Servicio;
@@ -38,12 +46,17 @@ public class HomeController {
 	@Autowired
 	private IUsuarioService usuarioService;
 
-
 	@Autowired
 	private IOrdenService ordenService;
 	
 	@Autowired
 	private IDetalleOrdenService detalleOrdenService;
+
+	@Autowired
+	PaypalService service;
+
+	public static final String SUCCESS_URL = "pay/success";
+	public static final String CANCEL_URL = "pay/cancel";
 
 
 	// para almacenar los detalles de la orden
@@ -95,7 +108,7 @@ public class HomeController {
 		detalleOrden.setServicio(servicio);
 		detalleOrden.setPrecio(servicio.getPrecio());
 
-		// Calcula el total del detalle de la orden basado en la cantidad
+		// Calcular el total del detalle de la orden basado en la cantidad
 		double totalDetalle = servicio.getPrecio() * cantidad;
 		detalleOrden.setTotal(totalDetalle);
 		detalleOrden.setNombre(servicio.getNombre());
@@ -124,7 +137,44 @@ public class HomeController {
 		return "usuario/carrito";
 	}
 
+	// paypal pay
+	@PostMapping("/pay")
+	public String payment(@ModelAttribute("orden") Orden orden) {
+		try {
+			Payment payment = service.createPayment(orden.getTotal(), orden.getMoneda(), orden.getMetodo(),
+					orden.getIntencion(), orden.getDescripcion(), "http://localhost:8080/" + CANCEL_URL,
+					"http://localhost:8080/" + SUCCESS_URL);
+			for(Links link:payment.getLinks()) {
+				if(link.getRel().equals("approval_url")) {
+					return "redirect:"+link.getHref();
+				}
+			}
 
+		} catch (PayPalRESTException e) {
+
+			e.printStackTrace();
+		}
+		return "redirect:/";
+	}
+	// cancelar pago
+	@GetMapping(value = CANCEL_URL)
+	public String cancelPay() {
+		return "cancel";
+	}
+	//pago exitoso
+	@GetMapping(value = SUCCESS_URL)
+	public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
+		try {
+			Payment payment = service.executePayment(paymentId, payerId);
+			System.out.println(payment.toJSON());
+			if (payment.getState().equals("approved")) {
+				return "success";
+			}
+		} catch (PayPalRESTException e) {
+			System.out.println(e.getMessage());
+		}
+		return "redirect:/";
+	}
 
 	// quitar un servicio del carrito
 	@GetMapping("/delete/cart/{id}")
@@ -151,7 +201,9 @@ public class HomeController {
 
 		return "usuario/carrito";
 	}
-	
+
+
+	//resumen de la orden
 	@GetMapping("/getCart")
 	public String getCart(Model model, HttpSession session) {
 		
@@ -175,7 +227,7 @@ public class HomeController {
 		return "usuario/resumenorden";
 	}
 	
-	// guardar la orden
+	// guardar(generar)la orden
 	@GetMapping("/saveOrder")
 	public String saveOrder(HttpSession session ) {
 		Date fechaCreacion = new Date();
@@ -188,7 +240,7 @@ public class HomeController {
 		orden.setUsuario(usuario);
 		ordenService.save(orden);
 		
-		//guardar detalles
+		//guardar detalles de la orden
 		for (DetalleOrden dt:detalles) {
 			dt.setOrden(orden);
 			detalleOrdenService.save(dt);

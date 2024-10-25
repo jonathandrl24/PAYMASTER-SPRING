@@ -2,25 +2,29 @@ package com.paymaster.model;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.*;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@ToString
 @Entity
 @Table(name = "ordenes")
 public class Orden {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	private double total;
 	private String numero;
 	private Date fechaCreacion;
-
-	private double total;
-	//(ELIMINAR SI SALE MAL)
-	@Enumerated(EnumType.STRING)  // Guarda el método de pago como una cadena de texto
-	private MetodoPago metodoPago; // Método de pago (tarjeta, transferencia, etc.)
-	private String estadoPago;  // Estado del pago (opcional)
-	private String paymentId;
-	private String payerId;
+	private String moneda;
+	private String metodo;
+	private String intencion;
+	private String descripcion;
 
 	@ManyToOne
 	private Usuario usuario;
@@ -29,19 +33,17 @@ public class Orden {
 	private List<DetalleOrden> detalle;
 
 	public Orden() {
-	
 	}
 
-	public Orden(Integer id, String numero, Date fechaCreacion, double total, String metodoPago, String estadoPago) {
+	public Orden(Integer id, String numero, Date fechaCreacion, double total) {
 		super();
 		this.id = id;
 		this.numero = numero;
 		this.fechaCreacion = fechaCreacion;
 		this.total = total;
-		this.metodoPago = MetodoPago.valueOf(metodoPago);
-		this.estadoPago = estadoPago;
 	}
 
+	//getters y setters
 	public Integer getId() {
 		return id;
 	}
@@ -75,22 +77,6 @@ public class Orden {
 		this.total = total;
 	}
 
-	public MetodoPago getMetodoPago() {
-		return metodoPago;
-	}
-
-	public void setMetodoPago(String metodoPago) {
-		this.metodoPago = MetodoPago.valueOf(metodoPago);
-	}
-
-	public String getEstadoPago() {
-		return estadoPago;
-	}
-
-	public void setEstadoPago(String estadoPago) {
-		this.estadoPago = estadoPago;
-	}
-
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -98,8 +84,40 @@ public class Orden {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
 
+	public String getMoneda() {
+		return moneda;
+	}
+
+	public void setMoneda(String moneda) {
+		this.moneda = moneda;
+	}
+
+	public String getMetodo() {
+		return metodo;
+	}
+
+	public void setMetodo(String metodo) {
+		this.metodo = metodo;
+	}
+
+	public String getIntencion() {
+		return intencion;
+	}
+
+	public void setIntencion(String intencion) {
+		this.intencion = intencion;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	// detalle orden
 	public List<DetalleOrden> getDetalle() {
 		return detalle;
 	}
@@ -108,25 +126,5 @@ public class Orden {
 		this.detalle = detalle;
 	}
 
-	public String getPaymentId() {
-		return paymentId;
-	}
-
-	public void setPaymentId(String paymentId) {
-		this.paymentId = paymentId;
-	}
-
-	public String getPayerId() {
-		return payerId;
-	}
-	public void setPayerId(String payerId) {
-		this.payerId = payerId;
-	}
-
-	@Override
-	public String toString() {
-		return "Orden [id=" + id + ", numero=" + numero + ", fechaCreacion=" + fechaCreacion + ", metodoPago=" + metodoPago + ", estadoPago=" + estadoPago + ", total=" + total + "]";
-	}
-	
 
 }

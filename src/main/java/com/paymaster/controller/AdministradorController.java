@@ -94,20 +94,4 @@ public class AdministradorController {
 		return "administrador/dashboard"; // la vista estará en templates/administrador/dashboard.html
 	}
 
-	//ELIMINAR TODO ABAJO SI SALE MAL
-	// Actualizar método de pago para una orden
-	@PostMapping("/actualizarMetodoPago")
-	public String actualizarMetodoPago(@RequestParam("ordenId") Integer ordenId, @RequestParam("metodoPago") String metodoPago, @RequestParam String datosPago) {
-		ordensService.actualizarMetodoPago(ordenId, metodoPago, datosPago);
-		return "redirect:/admin/ordenes";  // Redirecciona a la página de órdenes
-	}
-
-	// Actualizar estado del pago para una orden
-	@PostMapping("/actualizarEstadoPago")
-	public String actualizarEstadoPago(@RequestParam("ordenId") Integer ordenId,
-									   @RequestParam("estadoPago") String estadoPago) {
-		ordensService.actualizarEstadoPago(ordenId, estadoPago);
-		return "redirect:/admin/ordenes";  // Redirecciona a la página de órdenes
-	}
-
 }

@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.paymaster.model.MetodoPago;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +18,6 @@ public class OrdenServiceImpl implements IOrdenService {
 	@Autowired
 	private IOrdenRepository ordenRepository;
 
-	// ElIMINAR SI TODO SALE MAL
-	@Autowired
-	private ValidacionPagoServiceImpl validacionPagoService;
-
 	@Override
 	public Orden save(Orden orden) {
 		return ordenRepository.save(orden);
@@ -32,7 +27,7 @@ public class OrdenServiceImpl implements IOrdenService {
 	public List<Orden> findAll() {
 		return ordenRepository.findAll();
 	}
-	// 0000010
+	// generar orden
 	@Override
 	public String generarNumeroOrden() {
 		int numero=0;
@@ -94,37 +89,6 @@ public class OrdenServiceImpl implements IOrdenService {
 		return ordenRepository.findTop5ByOrderByFechaCreacionDesc();
 	}
 
-	//(Eliminar todo abajo si sale mal)
-	// Actualizar el estado del pago para una orden
-	@Override
-	public void actualizarEstadoPago(Integer ordenId, String estadoPago) {
-		Optional<Orden> ordenOpt = ordenRepository.findById(ordenId);
-		if (ordenOpt.isPresent()) {
-			Orden orden = ordenOpt.get();
-			orden.setEstadoPago(estadoPago);
-			ordenRepository.save(orden);
-		}
-	}
-
-	@Override
-	public void actualizarMetodoPago(Integer ordenId, String metodoPago, String datosPago) {
-		Optional<Orden> ordenOpt = ordenRepository.findById(ordenId);
-		if (ordenOpt.isPresent()) {
-			Orden orden = ordenOpt.get();
-
-			// Convierte el string a MetodoPago enum
-			MetodoPago metodoPagoEnum = MetodoPago.valueOf(metodoPago.toUpperCase());
-
-			// Valida los datos de pago antes de actualizar
-			boolean pagoValido = validacionPagoService.validarDatosPago(metodoPagoEnum, datosPago);
-			if (!pagoValido) {
-				throw new IllegalArgumentException("Datos de pago no válidos para el método seleccionado.");
-			}
-
-			orden.setMetodoPago(metodoPagoEnum.toString());  // Convierte el enum a String
-			ordenRepository.save(orden);
-		}
-	}
 
 }
 
