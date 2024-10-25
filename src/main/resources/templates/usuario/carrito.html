@@ -79,7 +79,7 @@
 						<label for="descripcion">Descripcion del pago</label>
 						<input type="text" id="descripcion" name="descripcion" placeholder="Descripcion del pago">
 						<input type="hidden" th:value="${orden.total}" name="total"/>
-						<input type="hidden" name="metodo" th:value="${paypal}"/>
+						<input type="hidden" name="method" th:value="${paypal}"/>
 						<button type="submit">Pagar con PayPal</button>
 					</form>
 				</div>

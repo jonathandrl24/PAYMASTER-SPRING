@@ -1,9 +1,6 @@
 package com.paymaster.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
@@ -122,41 +119,45 @@ public class HomeController {
 	// paypal pagar
 	@PostMapping("/pay")
 	public String payment(@ModelAttribute("orden") Orden orden) {
-		// Establecer valores predeterminados si son nulos
-		if (orden.getMetodo() == null) {
-			orden.setMetodo("paypal");
+		if (orden.getMethod() == null || orden.getMethod().isEmpty()) {
+			orden.setMethod("paypal");
 		}
-		if (orden.getIntent() == null) {
-			orden.setIntent("sale");  // O el valor que necesites
+		if (orden.getIntent() == null || orden.getIntent().isEmpty()) {
+			orden.setIntent("sale");
 		}
 		if (orden.getDescripcion() == null) {
-			orden.setDescripcion("Pago por servicio."); // Valor predeterminado
+			orden.setDescripcion("Pago por servicio.");
 		}
+
+		// Formatea y convierte el total con el punto decimal
+		String totalFormatted = String.format(Locale.US, "%.2f", orden.getTotal());
+		Double totalDouble = Double.parseDouble(totalFormatted);
 
 		try {
 			Payment payment = service.createPayment(
-					orden.getTotal(),
+					totalDouble,
 					orden.getMoneda(),
-					orden.getMetodo(),
+					orden.getMethod(),
 					orden.getIntent(),
 					orden.getDescripcion(),
 					"http://localhost:8080/payment/cancel",
 					"http://localhost:8080/payment/success"
 			);
 
-			// Verificar el enlace de aprobación y redirigir
 			for (Links link : payment.getLinks()) {
 				if (link.getRel().equals("approval_url")) {
 					return "redirect:" + link.getHref();
 				}
 			}
 		} catch (PayPalRESTException e) {
-			e.printStackTrace();  // Esto ayuda a detectar el error específico
+			System.err.println("Error: " + e.getMessage());
+			e.printStackTrace();
 		}
-
-		// Redirigir a la página principal en caso de error
 		return "redirect:/";
 	}
+
+
+
 
 
 	// cancelar pago paypal

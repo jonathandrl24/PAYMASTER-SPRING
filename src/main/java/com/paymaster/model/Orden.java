@@ -21,7 +21,7 @@ public class Orden {
 	private String numero;
 	private Date fechaCreacion;
 	private String moneda;
-	private String metodo;
+	private String method;
 	private String intent;
 	private String descripcion;
 
@@ -92,12 +92,12 @@ public class Orden {
 		this.moneda = moneda;
 	}
 
-	public String getMetodo() {
-		return metodo;
+	public String getMethod() {
+		return method;
 	}
 
-	public void setMetodo(String metodo) {
-		this.metodo = metodo;
+	public void setMethod(String method) {
+		this.method = method;
 	}
 
 	public String getIntent() {

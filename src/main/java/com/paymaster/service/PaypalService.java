@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,7 @@ public class PaypalService {
 
 		Amount amount = new Amount();
 		amount.setCurrency(moneda);
-		total = new BigDecimal(total).setScale(2, RoundingMode.HALF_UP).doubleValue();
-		amount.setTotal(String.format("%.3f", total));
+		amount.setTotal(String.format(Locale.US, "%.2f", total));
 
 		Transaction transaction = new Transaction();
 		transaction.setDescription(descripcion);
@@ -45,11 +45,10 @@ public class PaypalService {
 		transactions.add(transaction);
 
 		Payer payer = new Payer();
-		payer.setPaymentMethod(metodo); // Utiliza el método proporcionado
-
+		payer.setPaymentMethod(metodo);
 
 		Payment payment = new Payment();
-		payment.setIntent(intent); // Utiliza la intención proporcionada
+		payment.setIntent(intent);
 		payment.setPayer(payer);
 		payment.setTransactions(transactions);
 
@@ -60,6 +59,7 @@ public class PaypalService {
 
 		return payment.create(apiContext);
 	}
+
 
 	// Método para ejecutar el pago
 	public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
