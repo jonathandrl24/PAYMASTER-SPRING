@@ -92,28 +92,16 @@ public class HomeController {
 	//Añadir al carrito
 	@PostMapping("/cart")
 	public String addCart(@RequestParam Integer id, @RequestParam Integer cantidad, Model model) {
-		// Verificar si la orden ya tiene un ID (es decir, ya ha sido creada)
-		if (orden.getId() == null) {
-			orden.setNumero(ordenService.generarNumeroOrden());  // Generar número único para la orden
-			orden = ordenService.save(orden);  // Guardar la orden y obtener el ID generado
-			log.info("Orden creada con ID: {}", orden.getId());
-		}
-
-		// Detalle de la orden que representa el producto/servicio en el carrito
 		DetalleOrden detalleOrden = new DetalleOrden();
 		Servicio servicio = servicioService.get(id)
 				.orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
 
-		// Asignar el detalle a la orden
 		detalleOrden.setServicio(servicio);
 		detalleOrden.setPrecio(servicio.getPrecio());
-
-		// Calcular el total del detalle de la orden basado en la cantidad
 		double totalDetalle = servicio.getPrecio() * cantidad;
 		detalleOrden.setTotal(totalDetalle);
 		detalleOrden.setNombre(servicio.getNombre());
 
-		// Validar si el producto ya está en el carrito
 		boolean yaIngresado = detalles.stream()
 				.anyMatch(det -> det.getServicio().getId().equals(servicio.getId()));
 
@@ -121,42 +109,57 @@ public class HomeController {
 			detalles.add(detalleOrden);
 		}
 
-		// Calcular el total de la orden
 		double sumaTotal = detalles.stream().mapToDouble(DetalleOrden::getTotal).sum();
-		orden.setTotal(sumaTotal);  // Asegúrate de que 'sumaTotal' sea un double bien formado
+		orden.setTotal(sumaTotal);
 
-		// Mensajes de depuración
-		log.info("Total del detalle: {}", totalDetalle);
-		log.info("Suma total de la orden: {}", sumaTotal);
-		log.info("ID de la orden: {}", orden.getId());
-
-		// Actualizar el modelo
 		model.addAttribute("cart", detalles);
 		model.addAttribute("orden", orden);
 
 		return "usuario/carrito";
 	}
 
-	// paypal pay
+
+	// paypal pagar
 	@PostMapping("/pay")
 	public String payment(@ModelAttribute("orden") Orden orden) {
+		// Establecer valores predeterminados si son nulos
+		if (orden.getMetodo() == null) {
+			orden.setMetodo("paypal");
+		}
+		if (orden.getIntent() == null) {
+			orden.setIntent("sale");  // O el valor que necesites
+		}
+		if (orden.getDescripcion() == null) {
+			orden.setDescripcion("Pago por servicio."); // Valor predeterminado
+		}
+
 		try {
-			Payment payment = service.createPayment(orden.getTotal(), orden.getMoneda(), orden.getMetodo(),
-					orden.getIntencion(), orden.getDescripcion(), "http://localhost:8080/" + CANCEL_URL,
-					"http://localhost:8080/" + SUCCESS_URL);
-			for(Links link:payment.getLinks()) {
-				if(link.getRel().equals("approval_url")) {
-					return "redirect:"+link.getHref();
+			Payment payment = service.createPayment(
+					orden.getTotal(),
+					orden.getMoneda(),
+					orden.getMetodo(),
+					orden.getIntent(),
+					orden.getDescripcion(),
+					"http://localhost:8080/payment/cancel",
+					"http://localhost:8080/payment/success"
+			);
+
+			// Verificar el enlace de aprobación y redirigir
+			for (Links link : payment.getLinks()) {
+				if (link.getRel().equals("approval_url")) {
+					return "redirect:" + link.getHref();
 				}
 			}
-
 		} catch (PayPalRESTException e) {
-
-			e.printStackTrace();
+			e.printStackTrace();  // Esto ayuda a detectar el error específico
 		}
+
+		// Redirigir a la página principal en caso de error
 		return "redirect:/";
 	}
-	// cancelar pago
+
+
+	// cancelar pago paypal
 	@GetMapping(value = CANCEL_URL)
 	public String cancelPay() {
 		return "cancel";
@@ -175,6 +178,46 @@ public class HomeController {
 		}
 		return "redirect:/";
 	}
+
+
+	// URL de éxito del pago paypal
+	@GetMapping("/payment/success")
+	public String paymentSuccess(@RequestParam("paymentId") String paymentId,
+								 @RequestParam("PayerID") String payerId,
+								 Model model) {
+		try {
+			// Completar el pago con PayPal
+			Payment payment = service.executePayment(paymentId, payerId);
+
+			// Si el pago es aprobado
+			if ("approved".equals(payment.getState())) {
+				// Generar número único para la orden y guardarla en la base de datos
+				orden.setNumero(ordenService.generarNumeroOrden());
+				orden = ordenService.save(orden);  // Guardar la orden en la base de datos
+				log.info("Orden creada con ID: {}", orden.getId());
+
+				// Asignar detalles de la orden a la orden y guardarlos en la base de datos
+				for (DetalleOrden detalle : detalles) {
+					detalle.setOrden(orden);  // Asociar el detalle a la orden
+					detalleOrdenService.save(detalle);  // Guardar cada detalle en la base de datos
+				}
+
+				// Limpiar carrito y detalles
+				detalles.clear();
+				orden = new Orden();
+
+				// Confirmar al usuario
+				model.addAttribute("mensaje", "Pago completado y orden generada correctamente.");
+				return "usuario/confirmacionPago";
+			}
+		} catch (PayPalRESTException e) {
+			e.printStackTrace();
+			model.addAttribute("mensaje", "Error al procesar el pago.");
+		}
+
+		return "redirect:/";
+	}
+
 
 	// quitar un servicio del carrito
 	@GetMapping("/delete/cart/{id}")

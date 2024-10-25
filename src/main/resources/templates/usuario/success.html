@@ -2,9 +2,36 @@
 <html>
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 </head>
 <body>
 	<h1>Payment Success</h1>
+	<p>Tu pago se ha procesado correctamente y la orden ha sido generada.</p>
+
+	<!-- Muestra los detalles de la orden generada -->
+	<h2>Resumen de tu Orden</h2>
+	<table>
+		<thead>
+		<tr>
+			<th>Nombre del Servicio</th>
+			<th>Cantidad</th>
+			<th>Precio Unitario</th>
+			<th>Total</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="detalle : ${orden.detalles}">
+			<td th:text="${detalle.nombre}"></td>
+			<td th:text="${detalle.cantidad}"></td>
+			<td th:text="${detalle.precio}"></td>
+			<td th:text="${detalle.total}"></td>
+		</tr>
+		</tbody>
+	</table>
+
+	<h2>Total de la Orden: <span th:text="${orden.total}"></span></h2>
+
+	<p>Gracias por tu compra. Recibirás una confirmación por correo electrónico en breve.</p>
 </body>
 </html>

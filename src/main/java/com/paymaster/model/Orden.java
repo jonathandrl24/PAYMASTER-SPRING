@@ -4,9 +4,8 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.ToString;
 
 @Data
@@ -23,7 +22,7 @@ public class Orden {
 	private Date fechaCreacion;
 	private String moneda;
 	private String metodo;
-	private String intencion;
+	private String intent;
 	private String descripcion;
 
 	@ManyToOne
@@ -101,12 +100,12 @@ public class Orden {
 		this.metodo = metodo;
 	}
 
-	public String getIntencion() {
-		return intencion;
+	public String getIntent() {
+		return intent;
 	}
 
-	public void setIntencion(String intencion) {
-		this.intencion = intencion;
+	public void setIntent(String intent) {
+		this.intent = intent;
 	}
 
 	public String getDescripcion() {

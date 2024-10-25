@@ -45,46 +45,42 @@
 		<div class="card-body">
 			<div class="row">
 				<div class="col-lg-9">
-					<table class="table">
+					<!-- Tabla de detalles del carrito -->
+					<table>
 						<thead>
 						<tr>
-							<th scope="col">Servicio</th>
-							<th scope="col">Precio</th>
-							<th scope="col">Total</th>
-							<th scope="col">Acción</th>
+							<th>Nombre</th>
+							<th>Precio</th>
+							<th>Total</th>
 						</tr>
 						</thead>
 						<tbody>
-						<tr th:each="orden : ${cart}">
-							<td th:text="${orden.nombre}"></td>
-							<td th:text="${orden.precio}"></td>
-							<td th:text="${orden.total}"></td>
-							<!-- Aquí debes utilizar el identificador único del detalle de la orden, no el id del servicio -->
-							<input type="hidden" name="orderId" th:value="${orden.total}" />
-							<td><a th:href="@{/delete/cart/{id}(id=${orden.servicio.id})}" class="btn btn-danger">Quitar</a></td>
+						<!-- Recorre cada detalle del carrito -->
+						<tr th:each="detalle : ${cart}">
+							<td th:text="${detalle.nombre}"></td>
+							<td th:text="${detalle.precio}"></td>
+							<td th:text="${detalle.total}"></td>
 						</tr>
 						</tbody>
 					</table>
 				</div>
 
 				<div class="col-lg-3">
-					<form th:action="@{/pagos/procesarPago}" method="post">
-						<!-- Campo oculto para enviar el ID de la orden -->
-						<input type="hidden" name="orderId" th:value="${orden.id}" />
+					<!-- Muestra el total de la orden -->
+					<h2>Total: <span th:text="${orden.total}"></span></h2>
 
-						<!-- Campo oculto para enviar el monto total -->
-						<input type="hidden" name="amount" th:value="${orden.total}" />
-						<p>Total: th:text="${orden.total}"</p>
-
-						<!-- Selección del método de pago -->
-						<label for="metodoPago">Método de Pago</label>
-						<select name="metodoPago" id="metodoPago">
-							<option value="PAYPAL">Paypal</option>
-							<option value="CREDIT_CARD">Tarjeta de Crédito</option>
-						</select>
-
-						<!-- Botón para proceder al pago -->
-						<button type="submit" class="btn btn-dark">Ir a Pagar</button>
+					<!-- Botón para iniciar el pago -->
+					<form th:action="@{/pay}" method="post">
+						<label for="precio">Total</label>
+						<input type="text" id="precio" name="precio" th:value="${orden.total}">
+						<label for="moneda">Moneda</label>
+						<input type="text" id="moneda" name="moneda" placeholder="Ingrese moneda">
+						<input type="hidden" id="intent" name="intent" value="sale">
+						<label for="descripcion">Descripcion del pago</label>
+						<input type="text" id="descripcion" name="descripcion" placeholder="Descripcion del pago">
+						<input type="hidden" th:value="${orden.total}" name="total"/>
+						<input type="hidden" name="metodo" th:value="${paypal}"/>
+						<button type="submit">Pagar con PayPal</button>
 					</form>
 				</div>
 			</div>
