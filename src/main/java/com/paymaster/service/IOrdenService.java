@@ -18,8 +18,7 @@ public interface IOrdenService {
 	//(ELIMINAR TODO ABAJO SI NO FUNCIONA)
 	// Métodos para gestionar el pago
 	public void actualizarMetodoPago(Integer ordenId, String metodoPago, String datosPago);
-		// Implementa la lógica para actualizar el método de pago y los datos adicionales
+	// Implementa la lógica para actualizar el método de pago y los datos adicionales
 	void actualizarEstadoPago(Integer ordenId, String estadoPago);
-
 	List<Orden> obtenerOrdenesRecientes();
 }

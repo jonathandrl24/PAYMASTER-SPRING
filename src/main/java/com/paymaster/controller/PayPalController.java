@@ -1,6 +1,7 @@
 package com.paymaster.controller;
 
 import com.paymaster.model.Orden;
+import com.paymaster.service.OrdenServiceImpl;
 import com.paymaster.service.PaymentService;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/paypal")
 public class PayPalController {
@@ -20,11 +23,26 @@ public class PayPalController {
     @Autowired
     private PaymentService paymentService;
 
+    @Autowired
+    private OrdenServiceImpl ordenService; // Inyecta el servicio para manejar las órdenes
+
     // URL donde el usuario iniciará el proceso de pago
     @PostMapping("/pago")
     public String pagar(Model model, @RequestParam("ordenId") Long ordenId) {
-        // Suponiendo que obtienes la orden desde la base de datos
-        Orden orden = obtenerOrdenPorId(ordenId); // Este método debe implementarse para obtener la orden real
+        // Obtiene la orden desde la base de datos usando el servicio
+        // Convertir el Long a Integer antes de pasar al servicio
+        Optional<Orden> optionalOrden = ordenService.findById(ordenId.intValue());
+        if (!optionalOrden.isPresent()) {
+            model.addAttribute("error", "Orden no encontrada");
+            return "error";
+        }
+
+        Orden orden = optionalOrden.get();
+
+        if (orden == null) {
+            model.addAttribute("error", "Orden no encontrada");
+            return "error"; // Manejo de error si la orden no existe
+        }
 
         try {
             // Crear el pago con PayPal
@@ -72,14 +90,5 @@ public class PayPalController {
     public String cancelarPago(Model model) {
         model.addAttribute("mensaje", "El pago ha sido cancelado.");
         return "resultado_pago_cancelado"; // Muestra la vista de cancelación
-    }
-
-    // Simulación de método para obtener una orden por ID
-    private Orden obtenerOrdenPorId(Long ordenId) {
-        // Aquí debes implementar la lógica para obtener la orden de tu base de datos
-        Orden orden = new Orden();
-        orden.setTotal(100.00); // Monto de prueba
-        // Establecer más detalles de la orden según tu lógica
-        return orden;
     }
 }

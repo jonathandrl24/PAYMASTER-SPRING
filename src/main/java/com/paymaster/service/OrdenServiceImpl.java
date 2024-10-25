@@ -33,6 +33,7 @@ public class OrdenServiceImpl implements IOrdenService {
 		return ordenRepository.findAll();
 	}
 	// 0000010
+	@Override
 	public String generarNumeroOrden() {
 		int numero=0;
 		String numeroConcatenado="";

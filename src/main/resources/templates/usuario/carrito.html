@@ -55,47 +55,39 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr th:each="orden:${cart}">
+						<tr th:each="orden : ${cart}">
 							<td th:text="${orden.nombre}"></td>
 							<td th:text="${orden.precio}"></td>
 							<td th:text="${orden.total}"></td>
-							<td><a th:href="@{/delete/cart/{id}   (id=${orden.servicio.id}) }" class="btn btn-danger">Quitar</a></td>
+							<!-- Aquí debes utilizar el identificador único del detalle de la orden, no el id del servicio -->
+							<input type="hidden" name="orderId" th:value="${orden.total}" />
+							<td><a th:href="@{/delete/cart/{id}(id=${orden.servicio.id})}" class="btn btn-danger">Quitar</a></td>
 						</tr>
 						</tbody>
 					</table>
 				</div>
 
 				<div class="col-lg-3">
-					<h2 class="card-title">SUBTOTAL</h2>
-					<ul class="list-group">
-						<li class="list-group-item"><h5 th:text="${orden.total}"></h5></li>
-						<a th:href="@{/order}" class="btn btn-dark">Ver Orden</a>
-					</ul>
+					<form th:action="@{/pagos/procesarPago}" method="post">
+						<!-- Campo oculto para enviar el ID de la orden -->
+						<input type="hidden" name="orderId" th:value="${orden.id}" />
+
+						<!-- Campo oculto para enviar el monto total -->
+						<input type="hidden" name="amount" th:value="${orden.total}" />
+						<p>Total: th:text="${orden.total}"</p>
+
+						<!-- Selección del método de pago -->
+						<label for="metodoPago">Método de Pago</label>
+						<select name="metodoPago" id="metodoPago">
+							<option value="PAYPAL">Paypal</option>
+							<option value="CREDIT_CARD">Tarjeta de Crédito</option>
+						</select>
+
+						<!-- Botón para proceder al pago -->
+						<button type="submit" class="btn btn-dark">Ir a Pagar</button>
+					</form>
 				</div>
 			</div>
-		</div>
-	</div>
-
-	<!-- Selección del método de pago -->
-	<div class="card mb-4">
-		<div class="card-body">
-			<h3>Seleccione un Método de Pago</h3>
-			<form action="/procesarPago" method="POST">
-				<!-- Información de la orden -->
-				<input type="hidden" name="orderId" th:value="${orden.id}"> <!-- ID de la orden -->
-				<input type="hidden" name="amount" th:value="${orden.total}"> <!-- Total a pagar -->
-
-				<!-- Opciones de método de pago -->
-				<div class="metodos-pago">
-					<label>
-						<input type="radio" name="metodoPago" value="PAYPAL" required>
-						<span>PayPal</span>
-					</label>
-				</div>
-
-				<!-- Botón para confirmar el pago -->
-				<button type="submit" class="btn btn-success mt-3">Pagar</button>
-			</form>
 		</div>
 	</div>
 </div>

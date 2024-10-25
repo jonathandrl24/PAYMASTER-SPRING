@@ -10,10 +10,10 @@
 <div class="container">
     <h1>Seleccione un Método de Pago</h1>
 
-    <form th:action="/procesarPago" method="POST">
-        <!-- Información sobre la orden (puedes adaptarla según tus datos) -->
-        <input type="hidden" name="orderId" value="12345"> <!-- ID de la orden -->
-        <input type="hidden" name="amount" value="100.00"> <!-- Monto a pagar -->
+    <form th:action="@{/pagos/procesarPago}" method="POST">
+        <!-- Información sobre la orden -->
+        <input type="hidden" name="orderId" th:value="${orden.id}"> <!-- ID de la orden dinámico -->
+        <input type="hidden" name="amount" th:value="${orden.total}"> <!-- Monto a pagar dinámico -->
 
         <!-- Selección de método de pago -->
         <div class="metodos-pago">

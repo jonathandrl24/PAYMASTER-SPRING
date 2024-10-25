@@ -23,23 +23,20 @@ public class PagoController {
     @Autowired
     private IOrdenService ordenService;
     @Autowired
-    private ValidacionPagoServiceImpl validacionService;
-    @Autowired
     private PagoServiceImpl pagoServiceImpl;
 
     @PostMapping("/procesarPago")
-    public String procesarPago(@RequestParam("orderId") Long orderId,
+    public String procesarPago(@RequestParam("orderId") Integer orderId,
                                @RequestParam("metodoPago") String metodoPago,
                                @RequestParam("amount") Double amount) {
-        // Convertir el Long a Integer si es necesario
-        Integer orderIdInteger = Math.toIntExact(orderId);
 
-        // Obtener la orden del servicio
-        Orden orden = ordenService.findById(orderIdInteger)
+        // Obtener la orden usando el ID
+        Orden orden = ordenService.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
 
-        // Procesar el pago
-        if (metodoPago.equals("PAYPAL")) {
+
+        // Procesar el pago basado en el método seleccionado
+        if ("PAYPAL".equals(metodoPago)) {
             boolean pagoExitoso = pagoServiceImpl.procesarPago(orden, MetodoPago.PAYPAL);
 
             if (pagoExitoso) {
@@ -48,7 +45,8 @@ public class PagoController {
                 return "redirect:/errorPago";
             }
         }
+
         return "redirect:/errorPago";
     }
-}
 
+}

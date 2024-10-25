@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
+import com.paymaster.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,6 @@ import com.paymaster.model.DetalleOrden;
 import com.paymaster.model.Orden;
 import com.paymaster.model.Servicio;
 import com.paymaster.model.Usuario;
-import com.paymaster.service.IDetalleOrdenService;
-import com.paymaster.service.IOrdenService;
-import com.paymaster.service.IUsuarioService;
-import com.paymaster.service.ServicioService;
 
 
 @Controller
@@ -40,13 +37,14 @@ public class HomeController {
 	
 	@Autowired
 	private IUsuarioService usuarioService;
-	
-	
+
+
 	@Autowired
 	private IOrdenService ordenService;
 	
 	@Autowired
 	private IDetalleOrdenService detalleOrdenService;
+
 
 	// para almacenar los detalles de la orden
 	List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
@@ -81,36 +79,52 @@ public class HomeController {
 	//Añadir al carrito
 	@PostMapping("/cart")
 	public String addCart(@RequestParam Integer id, @RequestParam Integer cantidad, Model model) {
+		// Verificar si la orden ya tiene un ID (es decir, ya ha sido creada)
+		if (orden.getId() == null) {
+			orden.setNumero(ordenService.generarNumeroOrden());  // Generar número único para la orden
+			orden = ordenService.save(orden);  // Guardar la orden y obtener el ID generado
+			log.info("Orden creada con ID: {}", orden.getId());
+		}
+
+		// Detalle de la orden que representa el producto/servicio en el carrito
 		DetalleOrden detalleOrden = new DetalleOrden();
-		Servicio servicio = new Servicio();
-		double sumaTotal = 0;
+		Servicio servicio = servicioService.get(id)
+				.orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
 
-		Optional<Servicio> optionalServicio = servicioService.get(id);
-		log.info("Servicio añadido: {}", optionalServicio.get());
-		log.info("Cantidad: {}", cantidad);
-		servicio = optionalServicio.get();
-
-		detalleOrden.setPrecio(servicio.getPrecio());
-		detalleOrden.setNombre(servicio.getNombre());
-		detalleOrden.setTotal(servicio.getPrecio() * cantidad);
+		// Asignar el detalle a la orden
 		detalleOrden.setServicio(servicio);
-		
-		//validar que el servicio no se añada 2 veces
-		Integer idServicio=servicio.getId();
-		boolean ingresado=detalles.stream().anyMatch(p -> p.getServicio().getId()==idServicio);
-		
-		if (!ingresado) {
+		detalleOrden.setPrecio(servicio.getPrecio());
+
+		// Calcula el total del detalle de la orden basado en la cantidad
+		double totalDetalle = servicio.getPrecio() * cantidad;
+		detalleOrden.setTotal(totalDetalle);
+		detalleOrden.setNombre(servicio.getNombre());
+
+		// Validar si el producto ya está en el carrito
+		boolean yaIngresado = detalles.stream()
+				.anyMatch(det -> det.getServicio().getId().equals(servicio.getId()));
+
+		if (!yaIngresado) {
 			detalles.add(detalleOrden);
 		}
-		
-		sumaTotal = detalles.stream().mapToDouble(dt -> dt.getTotal()).sum();
 
-		orden.setTotal(sumaTotal);
+		// Calcular el total de la orden
+		double sumaTotal = detalles.stream().mapToDouble(DetalleOrden::getTotal).sum();
+		orden.setTotal(sumaTotal);  // Asegúrate de que 'sumaTotal' sea un double bien formado
+
+		// Mensajes de depuración
+		log.info("Total del detalle: {}", totalDetalle);
+		log.info("Suma total de la orden: {}", sumaTotal);
+		log.info("ID de la orden: {}", orden.getId());
+
+		// Actualizar el modelo
 		model.addAttribute("cart", detalles);
 		model.addAttribute("orden", orden);
 
 		return "usuario/carrito";
 	}
+
+
 
 	// quitar un servicio del carrito
 	@GetMapping("/delete/cart/{id}")

@@ -6,6 +6,11 @@ import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +20,25 @@ public class PaymentService {
 
     @Autowired
     private APIContext apiContext;
+    @Autowired
+    private PaymentService paymentService;
 
     // Método para crear un pago de PayPal
     public Payment createPayment(Orden orden, String cancelUrl, String successUrl) throws PayPalRESTException {
         // 1. Configurar la cantidad del pago
         Amount amount = new Amount();
-        amount.setCurrency("USD");  // Aquí puedes usar la moneda que prefieras
-        amount.setTotal(String.format("%.2f", orden.getTotal()));  // Importe total del pago
+        amount.setCurrency("USD");  // Asegúrate de que la moneda sea correcta
+
+        // Verifica que el total no sea nulo y sea positivo
+        Double total = orden.getTotal(); // Asegúrate de que esto devuelva un Double
+        if (total == null || total < 0) {
+            throw new IllegalArgumentException("El total de la orden no puede ser nulo o negativo.");
+        }
+
+        // Formatea el total con dos decimales
+        String totalFormatted = String.format("%.3f", total);
+        System.out.println("Total formateado: " + totalFormatted); // Depuración
+        amount.setTotal(totalFormatted);  // Importe total del pago
 
         // 2. Crear la transacción
         Transaction transaction = new Transaction();
@@ -49,8 +66,17 @@ public class PaymentService {
         payment.setRedirectUrls(redirectUrls);
 
         // 7. Crear el pago en PayPal
-        return payment.create(apiContext);  // Crea el pago usando PayPal API
+        try {
+            return payment.create(apiContext);  // Crear el pago usando PayPal API
+        } catch (PayPalRESTException e) {
+            // Manejar errores de PayPal aquí
+            System.err.println("Error al crear el pago: " + e.getMessage());
+            throw e;
+        }
     }
+
+
+
 
     // Método para ejecutar el pago después de la aprobación del usuario
     public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
