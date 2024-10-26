@@ -270,32 +270,23 @@ public class HomeController {
 		
 		return "usuario/resumenorden";
 	}
-	
-	// guardar(generar)la orden
-	@GetMapping("/saveOrder")
-	public String saveOrder(HttpSession session ) {
-		Date fechaCreacion = new Date();
-		orden.setFechaCreacion(fechaCreacion);
-		orden.setNumero(ordenService.generarNumeroOrden());
-		
-		//usuario
-		Usuario usuario =usuarioService.findById( Integer.parseInt(session.getAttribute("idusuario").toString())  ).get();
-		
-		orden.setUsuario(usuario);
-		ordenService.save(orden);
-		
-		//guardar detalles de la orden
-		for (DetalleOrden dt:detalles) {
-			dt.setOrden(orden);
-			detalleOrdenService.save(dt);
+
+	@GetMapping("/resumenorden")
+	public String mostrarResumenOrden(HttpSession session, Model model) {
+		// Obtener el usuario a partir de la sesión
+		Integer idUsuario = (Integer) session.getAttribute("idusuario");
+		if (idUsuario != null) {
+			Usuario usuario = usuarioService.findById(idUsuario).orElse(null);
+			model.addAttribute("usuario", usuario);
+
 		}
-		
-		///limpiar lista y orden
-		orden = new Orden();
-		detalles.clear();
-		
-		return "redirect:/";
+		// Agregar otros datos necesarios como la lista de detalles y la orden
+		model.addAttribute("cart", detalles);
+		model.addAttribute("orden", orden);
+
+		return "usuario/resumenorden";
 	}
+
 	//Funcionalidad para buscar un servicio por nombre
 	@PostMapping("/search")
 	public String searchProduct(@RequestParam String nombre, Model model) {
