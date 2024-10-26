@@ -157,43 +157,37 @@ public class HomeController {
 	}
 
 
-
-
-
 	// cancelar pago paypal
 	@GetMapping(value = CANCEL_URL)
 	public String cancelPay() {
-		return "cancel";
+		return "usuario/cancel";
 	}
 	//pago exitoso
-	@GetMapping(value = SUCCESS_URL)
-	public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
-		try {
-			Payment payment = service.executePayment(paymentId, payerId);
-			System.out.println(payment.toJSON());
-			if (payment.getState().equals("approved")) {
-				return "success";
-			}
-		} catch (PayPalRESTException e) {
-			System.out.println(e.getMessage());
-		}
-		return "redirect:/";
-	}
-
-
-	// URL de éxito del pago paypal
+	// URL de éxito del pago de PayPal
 	@GetMapping("/payment/success")
 	public String paymentSuccess(@RequestParam("paymentId") String paymentId,
 								 @RequestParam("PayerID") String payerId,
+								 HttpSession session,
 								 Model model) {
 		try {
 			// Completar el pago con PayPal
 			Payment payment = service.executePayment(paymentId, payerId);
+			System.out.println(payment.toJSON());
 
 			// Si el pago es aprobado
 			if ("approved".equals(payment.getState())) {
-				// Generar número único para la orden y guardarla en la base de datos
+				// Obtener el usuario de la sesión
+				Usuario usuario = usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).orElse(null);
+				if (usuario == null) {
+					model.addAttribute("mensaje", "No se encontró el usuario.");
+					return "redirect:/";
+				}
+
+				// Generar número único para la orden y guardar la orden en la base de datos
 				orden.setNumero(ordenService.generarNumeroOrden());
+				orden.setFechaCreacion(new Date());
+				orden.setUsuario(usuario); // Asignar el usuario a la orden
+
 				orden = ordenService.save(orden);  // Guardar la orden en la base de datos
 				log.info("Orden creada con ID: {}", orden.getId());
 
@@ -209,7 +203,7 @@ public class HomeController {
 
 				// Confirmar al usuario
 				model.addAttribute("mensaje", "Pago completado y orden generada correctamente.");
-				return "usuario/confirmacionPago";
+				return "/usuario/resumenorden";  // Redirige a una página de confirmación de pago
 			}
 		} catch (PayPalRESTException e) {
 			e.printStackTrace();
@@ -218,7 +212,6 @@ public class HomeController {
 
 		return "redirect:/";
 	}
-
 
 	// quitar un servicio del carrito
 	@GetMapping("/delete/cart/{id}")
