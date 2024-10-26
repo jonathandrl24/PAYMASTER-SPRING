@@ -1,9 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard - Administrador</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Paymaster</title>
+
+
     <!-- Bootstrap core CSS -->
     <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}"
           rel="stylesheet">
@@ -12,59 +19,112 @@
     <link th:href="@{css/heroic-features.css}" rel="stylesheet">
 
 </head>
-<body>
-<div class="container mt-5">
-    <!-- Título del Dashboard -->
-    <div class="row">
-        <div class="col-md-12">
-            <h1 class="text-center">Dashboard del Administrador</h1>
-        </div>
-    </div>
 
-    <!-- Mostrar ganancias totales -->
-    <div class="row mt-4">
-        <div class="col-md-6 offset-md-3">
-            <div class="card text-white bg-success mb-3">
-                <div class="card-body">
-                    <h4 class="card-title">Ganancias Totales</h4>
-                    <p class="card-text">
-                        <span th:text="${gananciasTotales}">0.00</span> USD
-                    </p>
+<body>
+
+<!-- Navigation -->
+<div th:include="administrador/template_admin.html::header"></div>
+
+<!-- Page Content -->
+<div class="container">
+        <!-- Título del Dashboard -->
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Dashboard del Administrador</h1>
+            </div>
+        </div>
+
+        <!-- Mostrar ganancias totales -->
+        <div class="row mt-4">
+            <div class="col-md-6 offset-md-3">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-body">
+                        <h4 class="card-title">Ganancias Totales</h4>
+                        <p class="card-text">
+                            <span th:text="${gananciasTotales}">0.00</span> USD
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Mostrar órdenes recientes -->
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <h3>Órdenes Recientes</h3>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>ID Orden</th>
-                    <th>Número de Orden</th>
-                    <th>Fecha de Creación</th>
-                    <th>Total</th>
-                    <th>Usuario</th>
-                </tr>
-                </thead>
-                <tbody>
-                <!-- Iterar sobre la lista de órdenes recientes -->
-                <tr th:each="orden : ${ordenesRecientes}">
-                    <td th:text="${orden.id}">1</td>
-                    <td th:text="${orden.numero}">ORD001</td>
-                    <td th:text="${#dates.format(orden.fechaCreacion, 'yyyy-MM-dd')}">2024-10-20</td>
-                    <td th:text="${orden.total}">0.00</td>
-                    <td th:text="${orden.usuario.nombre}">Nombre del Usuario</td>
-                </tr>
-                </tbody>
-            </table>
+        <div>
+            <h2>Ganancias Diarias</h2>
+            <canvas id="gananciasChart"></canvas>
         </div>
-    </div>
+
+        <!-- Mostrar órdenes recientes -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h3>Órdenes Recientes</h3>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID Orden</th>
+                        <th>Número de Orden</th>
+                        <th>Fecha de Creación</th>
+                        <th>Total</th>
+                        <th>Usuario</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Iterar sobre la lista de órdenes recientes -->
+                    <tr th:each="orden : ${ordenesRecientes}">
+                        <td th:text="${orden.id}">1</td>
+                        <td th:text="${orden.numero}">ORD001</td>
+                        <td th:text="${#dates.format(orden.fechaCreacion, 'yyyy-MM-dd')}">2024-10-20</td>
+                        <td th:text="${orden.total}">0.00</td>
+                        <td th:text="${orden.usuario.nombre}">Nombre del Usuario</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 </div>
+<!-- /.container -->
+
+<div th:include="administrador/template_admin.html::footer"></div>
 
 <!-- Bootstrap core JavaScript -->
 <script th:src="@{vendor/jquery/jquery.min.js}"></script>
-<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script></body>
+<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{https://cdn.jsdelivr.net/npm/chart.js}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Llama al endpoint para obtener las ganancias diarias
+        fetch('/administrador/ganancias/diarias?inicio=2024-10-01&fin=2024-10-31')
+            .then(response => response.json())
+            .then(data => {
+                const fechas = data.map(item => item.fecha);
+                const ganancias = data.map(item => item.ganancia);
+
+                // Configura y renderiza el gráfico
+                const ctx = document.getElementById('gananciasChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: fechas,
+                        datasets: [{
+                            label: 'Ganancias Diarias',
+                            data: ganancias,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: { title: { display: true, text: 'Fecha' }},
+                            y: { title: { display: true, text: 'Ganancia ($)' }}
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error obteniendo datos de ganancias:', error));
+    });
+</script>
+
+
+</body>
+
 </html>
+

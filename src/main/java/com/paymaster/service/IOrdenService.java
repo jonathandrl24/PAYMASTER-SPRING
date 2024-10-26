@@ -2,6 +2,7 @@ package com.paymaster.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.paymaster.model.Orden;
@@ -16,4 +17,6 @@ public interface IOrdenService {
 	double calcularGananciasTotales();
 	double calcularGananciasPorPeriodo(Date fechaInicio, Date fechaFin);
 	List<Orden> obtenerOrdenesRecientes();
+
+	List<Map<String, Object>> calcularGananciasDiarias(Date fechaInicio, Date fechaFin);
 }

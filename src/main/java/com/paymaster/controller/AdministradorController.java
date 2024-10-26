@@ -82,6 +82,15 @@ public class AdministradorController {
 		return ResponseEntity.ok(ganancias);
 	}
 
+	@GetMapping("/ganancias/diarias")
+	public ResponseEntity<List<Map<String, Object>>> obtenerGananciasDiarias(
+			@RequestParam("inicio") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio,
+			@RequestParam("fin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFin) {
+
+		List<Map<String, Object>> gananciasDiarias = ordensService.calcularGananciasDiarias(fechaInicio, fechaFin);
+		return ResponseEntity.ok(gananciasDiarias);
+	}
+
 	@GetMapping("/dashboard")
 	public String getDashboard(Model model) {
 		double gananciasTotales = ordensService.calcularGananciasTotales();

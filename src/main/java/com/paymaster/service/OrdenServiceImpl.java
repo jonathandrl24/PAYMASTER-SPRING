@@ -1,9 +1,6 @@
 package com.paymaster.service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,6 +84,11 @@ public class OrdenServiceImpl implements IOrdenService {
 	public List<Orden> obtenerOrdenesRecientes() {
 		// Llama al método del repositorio para obtener las órdenes más recientes
 		return ordenRepository.findTop5ByOrderByFechaCreacionDesc();
+	}
+
+	@Override
+	public List<Map<String, Object>> calcularGananciasDiarias(Date fechaInicio, Date fechaFin) {
+		return ordenRepository.findGananciasDiarias(fechaInicio, fechaFin);
 	}
 
 
