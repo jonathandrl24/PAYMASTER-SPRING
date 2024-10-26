@@ -176,6 +176,12 @@ public class HomeController {
 
 			// Si el pago es aprobado
 			if ("approved".equals(payment.getState())) {
+				// Verificar que el atributo idusuario no sea nulo
+				if (session.getAttribute("idusuario") == null) {
+					model.addAttribute("mensaje", "Usuario no autenticado.");
+					return "redirect:/login";  // Redirigir a la página de inicio de sesión
+				}
+
 				// Obtener el usuario de la sesión
 				Usuario usuario = usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).orElse(null);
 				if (usuario == null) {
@@ -203,7 +209,7 @@ public class HomeController {
 
 				// Confirmar al usuario
 				model.addAttribute("mensaje", "Pago completado y orden generada correctamente.");
-				return "/usuario/resumenorden";  // Redirige a una página de confirmación de pago
+				return "usuario/resumenorden";  // Redirige a una página de confirmación de pago
 			}
 		} catch (PayPalRESTException e) {
 			e.printStackTrace();
@@ -212,6 +218,7 @@ public class HomeController {
 
 		return "redirect:/";
 	}
+
 
 	// quitar un servicio del carrito
 	@GetMapping("/delete/cart/{id}")

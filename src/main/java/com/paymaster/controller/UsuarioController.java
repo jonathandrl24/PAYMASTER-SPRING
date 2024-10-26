@@ -55,29 +55,32 @@ public class UsuarioController {
 	public String login() {
 		return "usuario/login";
 	}
-	
+
 	@GetMapping("/acceder")
 	public String acceder(Usuario usuario, HttpSession session) {
 		logger.info("Accesos : {}", usuario);
-		
-		Optional<Usuario> user=usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString()));
-		//logger.info("Usuario de db: {}", user.get());
-		
+
+		// Verifica que el usuario existe en la base de datos
+		Optional<Usuario> user = usuarioService.findByEmailAndPassword(usuario.getEmail(), usuario.getPassword());
+		// Aquí, asegúrate de que estás buscando por email y password o por lo que sea necesario para la autenticación
+
 		if (user.isPresent()) {
+			// Si el usuario existe, guardamos su ID en la sesión
 			session.setAttribute("idusuario", user.get().getId());
-			
+
 			if (user.get().getTipo().equals("ADMIN")) {
 				return "redirect:/administrador";
-			}else {
+			} else {
 				return "redirect:/";
 			}
-		}else {
+		} else {
 			logger.info("Usuario no existe");
 		}
-		
+
 		return "redirect:/";
 	}
-	
+
+
 	@GetMapping("/compras")
 	public String obtenerCompras(Model model, HttpSession session) {
 		model.addAttribute("sesion", session.getAttribute("idusuario"));
