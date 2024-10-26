@@ -158,7 +158,7 @@ public class HomeController {
 
 
 	// cancelar pago paypal
-	@GetMapping(value = CANCEL_URL)
+	@GetMapping("/payment/cancel")
 	public String cancelPay() {
 		return "usuario/cancel";
 	}

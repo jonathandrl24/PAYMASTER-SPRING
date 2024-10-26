@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Insert title here</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Insert title here</title>
+	<!-- Bootstrap core CSS -->
+	<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
+		  rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link th:href="@{/css/heroic-features.css}" rel="stylesheet">
 </head>
 <body>
-	<h1>Payment Failure</h1>
+<!-- Navigation -->
+<div th:include="usuario/template_usuario.html::header" th:if="${sesion==null}">
+</div>
+
+<div th:include="usuario/template_usuario.html::header-user" th:unless="${sesion==null}"> </div>
+
+<div class="container">
+	<h1>Pago cancelado</h1>
 	<p>El pago ha sido cancelado. Si deseas completar tu compra, regresa al carrito y vuelve a intentarlo.</p>
 
-	<a href="/carrito">Volver al Carrito</a>
+	<a th:href="@{/}">Volver al Inicio</a>
+</div>
+<!-- Footer -->
+<div th:include="usuario/template_usuario.html::footer">
+</div>
+
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
 </body>
 </html>

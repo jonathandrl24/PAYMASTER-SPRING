@@ -18,11 +18,12 @@
 
 <div th:include="usuario/template_usuario.html::header-user" th:unless="${sesion==null}"> </div>
 
-	<div>
-	<h1>Payment Success</h1>
+	<div class="container">
+	<h1>Pago Exitoso</h1>
 	<p>Tu pago se ha procesado correctamente y la orden ha sido generada.</p>
 	<!-- Muestra los detalles de la orden generada -->
 	<p>Gracias por tu compra. Recibirás una confirmación por correo electrónico en breve.</p>
+		<a th:href="@{/}">Volver al Inicio</a>
 	</div>
 <!-- Footer -->
 <div th:include="usuario/template_usuario.html::footer">
