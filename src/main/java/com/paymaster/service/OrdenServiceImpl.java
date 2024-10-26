@@ -1,7 +1,16 @@
 package com.paymaster.service;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.*;
 
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -89,6 +98,46 @@ public class OrdenServiceImpl implements IOrdenService {
 	@Override
 	public List<Map<String, Object>> calcularGananciasDiarias(Date fechaInicio, Date fechaFin) {
 		return ordenRepository.findGananciasDiarias(fechaInicio, fechaFin);
+	}
+
+	// Descargar Reporte Ordenes Excel
+	public ByteArrayInputStream generarReporteExcel() throws IOException {
+		String[] columnas = {"ID", "Total", "Número", "Fecha de Creación", "Moneda", "Método de Pago", "Descripción"};
+
+		// Crear el workbook y la hoja
+		Workbook workbook = new XSSFWorkbook();
+		Sheet hoja = workbook.createSheet("Órdenes");
+
+		// Crear el encabezado de la hoja
+		Row encabezadoFila = hoja.createRow(0);
+		for (int i = 0; i < columnas.length; i++) {
+			Cell cell = encabezadoFila.createCell(i);
+			cell.setCellValue(columnas[i]);
+		}
+
+		// Obtener todas las órdenes
+		List<Orden> ordenes = ordenRepository.findAll();
+		int filaIdx = 1;
+
+		// Rellenar filas con datos de órdenes
+		for (Orden orden : ordenes) {
+			Row fila = hoja.createRow(filaIdx++);
+
+			fila.createCell(0).setCellValue(orden.getId());
+			fila.createCell(1).setCellValue(orden.getTotal());
+			fila.createCell(2).setCellValue(orden.getNumero());
+			fila.createCell(3).setCellValue(orden.getFechaCreacion() != null ? orden.getFechaCreacion().toString() : "Sin fecha"); // Verificar si es null
+			fila.createCell(4).setCellValue(orden.getMoneda());
+			fila.createCell(5).setCellValue(orden.getMethod());
+			fila.createCell(6).setCellValue(orden.getDescripcion());
+		}
+
+		// Escribir datos a un ByteArrayOutputStream
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		workbook.write(out);
+		workbook.close();
+
+		return new ByteArrayInputStream(out.toByteArray());
 	}
 
 

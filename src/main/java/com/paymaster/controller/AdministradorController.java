@@ -1,5 +1,7 @@
 package com.paymaster.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +9,10 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -101,6 +106,20 @@ public class AdministradorController {
 		model.addAttribute("ordenesRecientes", ordenesRecientes);
 
 		return "administrador/dashboard"; // la vista estará en templates/administrador/dashboard.html
+	}
+
+	// desargar reportes excel
+	@GetMapping("/reporte/excel")
+	public ResponseEntity<InputStreamResource> descargarReporteExcel() throws IOException {
+		ByteArrayInputStream reporte = ordensService.generarReporteExcel();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=ordenes.xlsx");
+
+		return ResponseEntity.ok()
+				.headers(headers)
+				.contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+				.body(new InputStreamResource(reporte));
 	}
 
 }

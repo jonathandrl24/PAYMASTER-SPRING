@@ -1,5 +1,7 @@
 package com.paymaster.service;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -19,4 +21,6 @@ public interface IOrdenService {
 	List<Orden> obtenerOrdenesRecientes();
 
 	List<Map<String, Object>> calcularGananciasDiarias(Date fechaInicio, Date fechaFin);
+	// Método para generar reporte en Excel
+	ByteArrayInputStream generarReporteExcel() throws IOException;
 }
