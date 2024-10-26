@@ -55,10 +55,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="dtOrden : ${cart}">
-                                    <td th:text="${dtOrden.nombre}"></td>
-                                    <td th:text="${dtOrden.precio}"></td>
-                                    <td th:text="${dtOrden.total}"></td>
+                                <tr th:each="Orden : ${cart}">
+                                    <td th:text="${Orden.nombre}"></td>
+                                    <td th:text="${Orden.precio}"></td>
+                                    <td th:text="${Orden.total}"></td>
                                 </tr>
                                 </tbody>
                             </table>

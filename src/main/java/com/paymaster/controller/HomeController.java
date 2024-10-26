@@ -188,11 +188,17 @@ public class HomeController {
 					model.addAttribute("mensaje", "No se encontró el usuario.");
 					return "redirect:/";
 				}
+				// Calcular el total de la orden
+				double total = 0.0;
+				for (DetalleOrden detalle : detalles) {
+					total += detalle.getPrecio();
+				}
 
 				// Generar número único para la orden y guardar la orden en la base de datos
 				orden.setNumero(ordenService.generarNumeroOrden());
 				orden.setFechaCreacion(new Date());
 				orden.setUsuario(usuario); // Asignar el usuario a la orden
+				orden.setTotal(total);
 
 				orden = ordenService.save(orden);  // Guardar la orden en la base de datos
 				log.info("Orden creada con ID: {}", orden.getId());
@@ -209,7 +215,8 @@ public class HomeController {
 
 				// Confirmar al usuario
 				model.addAttribute("mensaje", "Pago completado y orden generada correctamente.");
-				return "usuario/resumenorden";  // Redirige a una página de confirmación de pago
+				model.addAttribute("orden", orden);
+				return "usuario/success";  // Redirige a una página de confirmación de pago
 			}
 		} catch (PayPalRESTException e) {
 			e.printStackTrace();
