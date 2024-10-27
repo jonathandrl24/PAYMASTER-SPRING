@@ -15,14 +15,6 @@
 	<link th:href="@{/css/style.css}" rel="stylesheet">
 	<link th:href="@{/css/navbar.css}" rel="stylesheet">
 
-	<style>
-		.titulo-servicios {
-			font-weight: bold; /* Aplica negrita */
-			font-family: 'Copperplate', sans-serif; /* Cambiar la fuente */
-			font-size: 2em; /* Ajusta el tamaño de la fuente */
-		}
-	</style>
-
 </head>
 <body>
 <header>
@@ -94,18 +86,12 @@
 	<!-- Page Features -->
 	<div class="row text-center">
 
-		<div class="col-lg-3 col-md-6 mb-4" th:each="servicio: ${servicios}">
-			<div class="card h-100">
-				<img class="card-img-top"
-					 th:src="@{/images/{img} (img=${servicio.imagen})} " alt="">
-				<div class="card-body">
-					<p class="card-text" th:text="${servicio.nombre}"></p>
-				</div>
-				<div class="card-footer">
-					<a th:href="@{/serviciohome/{id}  (id=${servicio.id})  }" class="btn btn-success">Ver
-						servicio</a>
-				</div>
-			</div>
+		<div class="col-12 col-md-4 col-lg-3 mb-5" th:each="servicio: ${servicios}">
+			<a class="product-item" th:href="@{/serviciohome/{id}  (id=${servicio.id})  }">
+				<img class="img-fluid product-thumbnail" th:src="@{/images/{img} (img=${servicio.imagen})} " alt="">
+				<h3 class="product-title" th:text="${servicio.nombre}"></h3>
+				<strong class="product-price" th:href="@{/serviciohome/{id}  (id=${servicio.id})  }">Ver servicio</strong>
+			</a>
 		</div>
 
 	</div>
