@@ -73,16 +73,15 @@
 
 					<!-- Botón para iniciar el pago -->
 					<form th:action="@{/pay}" method="post">
-						<label for="precio">Total</label>
-						<input type="text" id="precio" name="precio" th:value="${orden.total}">
-						<label for="moneda">Moneda</label>
-						<input type="text" id="moneda" name="moneda" placeholder="Ingrese moneda">
+						<input type="hidden" id="precio" name="precio" th:value="${orden.total}">
+						<input type="hidden" id="moneda" name="moneda" value="USD">
 						<input type="hidden" id="intent" name="intent" value="sale">
-						<label for="descripcion">Descripcion del pago</label>
-						<input type="text" id="descripcion" name="descripcion" placeholder="Descripcion del pago">
+						<label for="descripcion"></label>
+						<input class="form-control" type="text" id="descripcion" name="descripcion" placeholder="Descripcion del pago">
+						<p>‎ </p>
 						<input type="hidden" th:value="${orden.total}" name="total"/>
 						<input type="hidden" name="method" th:value="${paypal}"/>
-						<button type="submit">Pagar con PayPal</button>
+						<button class="btn-facebook" type="submit">Pagar con PayPal</button>
 					</form>
 				</div>
 			</div>

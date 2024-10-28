@@ -193,12 +193,20 @@ public class HomeController {
 				for (DetalleOrden detalle : detalles) {
 					total += detalle.getPrecio();
 				}
+				String moneda = "USD";
+				String method = "paypal";
+				String intent = "venta";
+				String descripcion = "Compra de servicio de construcción";
 
 				// Generar número único para la orden y guardar la orden en la base de datos
 				orden.setNumero(ordenService.generarNumeroOrden());
 				orden.setFechaCreacion(new Date());
 				orden.setUsuario(usuario); // Asignar el usuario a la orden
 				orden.setTotal(total);
+				orden.setMoneda(moneda);
+				orden.setMethod(method);
+				orden.setIntent(intent);
+				orden.setDescripcion(descripcion);
 
 				orden = ordenService.save(orden);  // Guardar la orden en la base de datos
 				log.info("Orden creada con ID: {}", orden.getId());
