@@ -41,11 +41,16 @@ public class AdministradorController {
 
 	@GetMapping("")
 	public String home(Model model) {
-
+		// Datos del home (servicios)
 		List<Servicio> servicios = servicioService.findAll();
 		model.addAttribute("servicios", servicios);
 
-
+		// Datos del dashboard en home (ganancias totales y órdenes recientes)
+		double gananciasTotales = ordensService.calcularGananciasTotales();
+		List<Orden> ordenesRecientes = ordensService.obtenerOrdenesRecientes();
+		model.addAttribute("gananciasTotales", gananciasTotales);
+		model.addAttribute("ordenesRecientes", ordenesRecientes);
+		// Retorna vista home del admin
 		return "administrador/home";
 	}
 	
@@ -72,21 +77,21 @@ public class AdministradorController {
 	}
 
 	// IMPLEMENTACION DASHBOARD
-	// Endpoint para obtener ganancias totales
+	// obtener ganancias totales
 	@GetMapping("/ganancias")
 	public ResponseEntity<Double> obtenerGananciasTotales() {
 		double ganancias = ordensService.calcularGananciasTotales();
 		return ResponseEntity.ok(ganancias);
 	}
 
-	// Endpoint para obtener ganancias por un período
+	// obtener ganancias por un período
 	@GetMapping("/ganancias/periodo")
 	public ResponseEntity<Double> obtenerGananciasPorPeriodo(@RequestParam("inicio") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio,
 															 @RequestParam("fin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFin) {
 		double ganancias = ordensService.calcularGananciasPorPeriodo(fechaInicio, fechaFin);
 		return ResponseEntity.ok(ganancias);
 	}
-
+	//obtener ganancias por dia en la grafica del dashboard
 	@GetMapping("/ganancias/diarias")
 	public ResponseEntity<List<Map<String, Object>>> obtenerGananciasDiarias(
 			@RequestParam("inicio") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio,
@@ -95,18 +100,18 @@ public class AdministradorController {
 		List<Map<String, Object>> gananciasDiarias = ordensService.calcularGananciasDiarias(fechaInicio, fechaFin);
 		return ResponseEntity.ok(gananciasDiarias);
 	}
-
-	@GetMapping("/dashboard")
-	public String getDashboard(Model model) {
-		double gananciasTotales = ordensService.calcularGananciasTotales();
-		List<Orden> ordenesRecientes = ordensService.obtenerOrdenesRecientes();
+	//dashboard prototipo (inutilizado)
+	//@GetMapping("/dashboard")
+	//public String getDashboard(Model model) {
+	//	double gananciasTotales = ordensService.calcularGananciasTotales();
+	//	List<Orden> ordenesRecientes = ordensService.obtenerOrdenesRecientes();
 
 		// Pasar los datos al modelo para que sean utilizados en la vista
-		model.addAttribute("gananciasTotales", gananciasTotales);
-		model.addAttribute("ordenesRecientes", ordenesRecientes);
+	//	model.addAttribute("gananciasTotales", gananciasTotales);
+	//	model.addAttribute("ordenesRecientes", ordenesRecientes);
 
-		return "administrador/dashboard"; // la vista estará en templates/administrador/dashboard.html
-	}
+	//	return "administrador/dashboard";
+	//}
 
 	// desargar reportes excel
 	@GetMapping("/reporte/excel")

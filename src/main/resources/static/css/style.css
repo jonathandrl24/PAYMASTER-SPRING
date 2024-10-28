@@ -76,7 +76,10 @@ form .btn {
   top: 0;
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
-  transition: .3s all ease; }
+  transition: .3s all ease;
+  border-radius: 10px;
+}
+
 .product-section .product-item h3 {
   font-weight: 600;
   font-size: 16px;
@@ -132,6 +135,7 @@ form .btn {
 }
 .product-section .product-item:hover .product-thumbnail {
   top: -25px;
+  border-radius: 10px;
 }
 .product-section .product-item:hover .icon-cross {
   bottom: 0;
