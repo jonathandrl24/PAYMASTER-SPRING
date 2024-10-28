@@ -179,7 +179,7 @@ public class HomeController {
 				// Verificar que el atributo idusuario no sea nulo
 				if (session.getAttribute("idusuario") == null) {
 					model.addAttribute("mensaje", "Usuario no autenticado.");
-					return "redirect:/login";  // Redirigir a la página de inicio de sesión
+					return "usuario/login";  // Redirigir a la página de inicio de sesión
 				}
 
 				// Obtener el usuario de la sesión
