@@ -58,7 +58,7 @@
 							</thead>
 							<tbody>
 								<tr th:each="dorden:${ordenes}">
-									<td th:text="${dorden.numero}"></td>
+									<td th:text="${dorden.id}"></td>
 									<td th:text="${dorden.fechaCreacion}"></td>
 									<td th:text="${dorden.total}"></td>
 									<td><a th:href="@{/administrador/detalle/{id} (id=${dorden.id}) }" class="btn btn-success">Ver

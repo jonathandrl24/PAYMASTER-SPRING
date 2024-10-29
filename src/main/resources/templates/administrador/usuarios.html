@@ -45,6 +45,7 @@
         <th scope="col">Nombre</th>
         <th scope="col">Email</th>
         <th scope="col">Dirección</th>
+        <th scope="col">Telefono</th>
       </tr>
     </thead>
     <tbody>
@@ -52,7 +53,8 @@
         <td th:text="${usuario.nombre}"></td>
         <td th:text="${usuario.email}"></td>
         <td th:text="${usuario.direccion}"></td>
-      </tr>       
+        <td th:text="${usuario.getTelefono()}"></td>
+      </tr>
     </tbody>
   </table>
 
