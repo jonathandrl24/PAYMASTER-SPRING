@@ -24,7 +24,24 @@
 <link th:href="@{css/heroic-features.css}" rel="stylesheet">
 	<link th:href="@{css/sb-admin-2.min.css}" rel="stylesheet">
 	<link th:href="@{/css/navbar.css}" rel="stylesheet">
+<style>
+	/* Ajuste de la sidebar */
+	#accordionSidebar {
+		height: 100vh;
+		width: 250px;
+		position: fixed;
+		top: 0;
+		left: 0;
+		overflow-y: auto;
+	}
 
+	/* Ajuste del contenido principal para que no se sobreponga encima del sidebar*/
+	.container {
+		margin-left: 250px;
+		padding-top: 20px;
+	}
+
+</style>
 
 </head>
 
@@ -282,5 +299,7 @@
 		});
 	</script>
 
+
 </body>
+
 </html>
