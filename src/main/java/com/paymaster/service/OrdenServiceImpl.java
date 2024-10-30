@@ -102,7 +102,7 @@ public class OrdenServiceImpl implements IOrdenService {
 
 	// Descargar Reporte Ordenes Excel
 	public ByteArrayInputStream generarReporteExcel() throws IOException {
-		String[] columnas = {"ID", "Total", "Número", "Fecha de Creación", "Moneda", "Método de Pago", "Descripción"};
+		String[] columnas = {"ID", "Total", "Número", "Fecha de Creación", "Moneda", "Método de Pago", "Descripción", "Cliente", "Email", "Telefono"};
 
 		// Crear el workbook y la hoja
 		Workbook workbook = new XSSFWorkbook();
@@ -130,6 +130,9 @@ public class OrdenServiceImpl implements IOrdenService {
 			fila.createCell(4).setCellValue(orden.getMoneda());
 			fila.createCell(5).setCellValue(orden.getMethod());
 			fila.createCell(6).setCellValue(orden.getDescripcion());
+			fila.createCell(7).setCellValue(orden.getUsuario().getNombre());
+			fila.createCell(8).setCellValue(orden.getUsuario().getEmail());
+			fila.createCell(9).setCellValue(orden.getUsuario().getTelefono());
 		}
 
 		// Escribir datos a un ByteArrayOutputStream
