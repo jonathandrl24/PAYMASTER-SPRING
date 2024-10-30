@@ -182,7 +182,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
-						<form>
+						<form id="contactForm">
 							<div class="row">
 								<h2>Contacta con nosotros, Tu Constructora de Confianza</h2>
 								<p>Si estás buscando una constructora que ofrezca calidad, innovación y un servicio personalizado, no dudes en contactarnos. Estamos aquí para ayudarte a hacer realidad tus proyectos con soluciones a medida y un enfoque centrado en el cliente.</p>
@@ -190,29 +190,25 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label class="sr-only">Nombre</label>
-										<input type="text" class="form-control" required="" id="nameSix" placeholder="Tu nombre">
+										<input type="text" class="form-control" required id="nombre" placeholder="Tu nombre">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<label class="sr-only">Email</label>
-										<input type="email" class="form-control" required="" id="emailSix" placeholder="Email">
+										<input type="email" class="form-control" required id="email" placeholder="Email">
 									</div>
 								</div>
 							</div>
-							<!--end of /.row-->
 							<div class="form-group">
 								<label class="sr-only">Mensaje</label>
-								<textarea class="form-control" required="" rows="7" placeholder="Escribir mensaje"></textarea>
+								<textarea class="form-control" required id="mensaje" rows="7" placeholder="Escribir mensaje"></textarea>
 							</div>
 							<button type="submit" class="btn btn-primary">Enviar mensaje</button>
 						</form>
 					</div>
-					<!-- /.col-md-8 -->
 				</div>
-				<!-- /.row -->
 			</div>
-			<!-- /.container -->
 		</div>
 		<!-- /END THE FEATURETTES -->
 
@@ -231,6 +227,30 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script th:src="@{vendor/jquery/jquery.min.js}"></script>
 <script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script>
+	document.getElementById("contactForm").addEventListener("submit", function(event) {
+		event.preventDefault();
+
+		const nombre = document.getElementById("nombre").value;
+		const email = document.getElementById("email").value;
+		const mensaje = document.getElementById("mensaje").value;
+
+		fetch("/contacto/enviar", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+			body: new URLSearchParams({
+				nombre: nombre,
+				email: email,
+				mensaje: mensaje,
+			})
+		})
+				.then(response => response.text())
+				.then(data => alert(data))
+				.catch(error => console.error("Error al enviar el mensaje:", error));
+	});
+</script>
 
 </body>
 

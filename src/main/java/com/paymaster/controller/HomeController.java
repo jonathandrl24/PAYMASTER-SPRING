@@ -24,6 +24,11 @@ import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import com.paymaster.model.DetalleOrden;
 import com.paymaster.model.Orden;
@@ -51,6 +56,9 @@ public class HomeController {
 
 	@Autowired
 	PaypalService service;
+
+	@Autowired
+	private JavaMailSender mailSender;
 
 	public static final String SUCCESS_URL = "pay/success";
 	public static final String CANCEL_URL = "pay/cancel";
@@ -311,4 +319,32 @@ public class HomeController {
 		return "usuario/home";
 	}
 
+	//funcionalidad enviar mensaje a correo
+	@PostMapping("/contacto/enviar")
+	@ResponseBody
+	public String enviarMensaje(@RequestParam String nombre,
+								@RequestParam String email,
+								@RequestParam String mensaje) {
+
+		try {
+			SimpleMailMessage emailMensaje = new SimpleMailMessage();
+			emailMensaje.setFrom("jonathandrl2403@gmail.com");
+			emailMensaje.setTo("jonathandrl2403@gmail.com");
+			emailMensaje.setSubject("Nuevo mensaje de contacto");
+			emailMensaje.setText("Nombre: " + nombre + "\nEmail: " + email + "\nMensaje: " + mensaje);
+
+			mailSender.send(emailMensaje);
+
+			return "Mensaje enviado exitosamente.";
+		} catch (Exception e) {
+			return "Error al enviar el mensaje.";
+		}
+	}
+
+	@GetMapping("/home")
+	public String homeDefault() {
+		return "usuario/home";
+	}
 }
+
+
