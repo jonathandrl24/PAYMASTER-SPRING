@@ -3,82 +3,121 @@
 
 <head>
 
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
+	<meta charset="utf-8">
+	<meta name="viewport"
+		  content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
 
-<title>Paymaster</title>
+	<title>Paymaster</title>
 
 
-<!-- Bootstrap core CSS -->
-<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
-	rel="stylesheet">
+	<!-- Bootstrap core CSS -->
+	<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
+		  rel="stylesheet">
 
-<!-- Custom styles for this template -->
-<link th:href="@{/css/heroic-features.css}" rel="stylesheet">
+	<!-- Custom styles for this template -->
+	<link th:href="@{/css/heroic-features.css}" rel="stylesheet">
+
+	<style>
+		.btn-primary {
+			background-color: green;
+			border-color: #208720 !important;
+		}
+		.btn-primary:hover {
+			background-color: #00c853;
+			border-color: #38ae2f !important;
+		}
+	</style>
 
 </head>
 
 <body>
 
-	<!-- Navigation -->
-	<div th:include="administrador/template_admin.html::header"></div>
+<!-- Navigation -->
+<div th:include="administrador/template_admin.html::header"></div>
 
-	<!-- Page Content -->
-	<div class="container">
+<!-- Page Content -->
+<div class="container">
 
 
-		<!-- Page Heading/Breadcrumbs -->
-		<h1 class="mt-4 mb-3">
-			Paymaster <small>Ordenes</small>
-		</h1>
+	<!-- Page Heading/Breadcrumbs -->
+	<h1 class="mt-4 mb-3">
+		Paymaster <small>Historial de Pagos</small>
+	</h1>
 
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a th:href="@{/administrador}">Home</a></li>
-			<li class="breadcrumb-item active">Ordenes</li>
-		</ol>
-		<div>
-			<a href="/administrador/reporte/excel" class="btn btn-primary">Descargar Reporte de Pagos</a></div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a th:href="@{/administrador}">Home</a></li>
+		<li class="breadcrumb-item active">Pagos</li>
+	</ol>
+	<div>
+		<a href="/administrador/reporte/excel" class="btn btn-primary">Descargar Reporte de Pagos</a></div>
 
-		<!-- Blog Post -->
-		<div class="card mb-4">
-			<div class="card-body">
-				<div class="row">
-					<div class="col-lg-12">
-						<table class="table">
-							<thead>
-								<tr>
-									<th scope="col">No. de Orden</th>
-									<th scope="col">Fecha</th>
-									<th scope="col">Valor</th>
-									<th scope="col">Acción</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="dorden:${ordenes}">
-									<td th:text="${dorden.id}"></td>
-									<td th:text="${dorden.fechaCreacion}"></td>
-									<td th:text="${dorden.total}"></td>
-									<td><a th:href="@{/administrador/detalle/{id} (id=${dorden.id}) }" class="btn btn-success">Ver
-											Detalle</a></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+	<!-- Blog Post -->
+	<div class="card mb-4">
+		<div class="card-body">
+			<div class="row">
+				<div class="col-lg-12">
+					<table class="table">
+						<thead>
+						<tr>
+							<th scope="col">No. de Pago</th>
+							<th scope="col">Fecha</th>
+							<th scope="col">Valor</th>
+							<th scope="col">Divisa</th>
+							<th scope="col">Metodo</th>
+							<th scope="col">Cliente</th>
+							<th scope="col">Email</th>
+							<th scope="col">telefono</th>
+							<th scope="col">Detalles</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:each="dorden:${ordenes}">
+							<td th:text="${dorden.id}"></td>
+							<td th:text="${dorden.fechaCreacion}"></td>
+							<td th:text="${dorden.total}"></td>
+							<td th:text="${dorden.moneda}"></td>
+							<td th:text="${dorden.method}"></td>
+							<td th:text="${dorden.usuario.getNombre()}"></td>
+							<td th:text="${dorden.usuario.getEmail()}"></td>
+							<td th:text="${dorden.usuario.getTelefono()}"></td>
+							<td><a th:href="@{/administrador/detalle/{id} (id=${dorden.id}) }" class="btn btn-success">Ver
+								Detalles</a></td>
+						</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- /.container -->
+</div>
+<!-- /.container -->
 
-	<!-- Footer -->
-	<div th:include="administrador/template_admin.html::footer"></div>
+<!-- Footer -->
+<!-- FOOTER -->
+<footer class="container">
+	<hr class="featurette-divider">
 
-	<!-- Bootstrap core JavaScript -->
-	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<p>&copy; 2024 Paymaster, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+</footer>
+</main>
+<!-- End of Footer -->
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+	<i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 </body>
 
