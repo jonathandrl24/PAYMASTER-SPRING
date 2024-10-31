@@ -23,7 +23,7 @@ public class PaypalService {
 
 	@Autowired
 	private APIContext apiContext;
-
+	//crear pago paypal, se iteran los datos y se llama al metodo
 	public Payment createPayment(
 			Double total,
 			String moneda,

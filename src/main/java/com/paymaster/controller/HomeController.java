@@ -69,7 +69,7 @@ public class HomeController {
 
 	// datos de la orden
 	Orden orden = new Orden();
-
+	// Pagina home con los datos de servicios y sesion de usuario
 	@GetMapping("")
 	public String home(Model model, HttpSession session) {
 		
@@ -82,7 +82,7 @@ public class HomeController {
 
 		return "usuario/home";
 	}
-
+	//Ver servicios
 	@GetMapping("serviciohome/{id}")
 	public String servicioHome(@PathVariable Integer id, Model model) {
 		log.info("Id servicio enviado como parámetro {}", id);
@@ -124,7 +124,7 @@ public class HomeController {
 	}
 
 
-	// paypal pagar
+	// Fucionalidad pagar con paypal
 	@PostMapping("/pay")
 	public String payment(@ModelAttribute("orden") Orden orden) {
 		if (orden.getMethod() == null || orden.getMethod().isEmpty()) {
@@ -170,8 +170,7 @@ public class HomeController {
 	public String cancelPay() {
 		return "usuario/cancel";
 	}
-	//pago exitoso
-	// URL de éxito del pago de PayPal
+	//pago exitoso paypal
 	@GetMapping("/payment/success")
 	public String paymentSuccess(@RequestParam("paymentId") String paymentId,
 								 @RequestParam("PayerID") String payerId,
@@ -184,7 +183,7 @@ public class HomeController {
 
 			// Si el pago es aprobado
 			if ("approved".equals(payment.getState())) {
-				// Verificar que el atributo idusuario no sea nulo
+				// Verificar que el atributo idusuario no sea nulo, la sesion debe estar iniciada para pagar
 				if (session.getAttribute("idusuario") == null) {
 					model.addAttribute("mensaje", "Usuario no autenticado.");
 					return "usuario/login";  // Redirigir a la página de inicio de sesión
@@ -229,14 +228,14 @@ public class HomeController {
 				detalles.clear();
 				orden = new Orden();
 
-				// Confirmar al usuario
+				// Confirmar al usuario pago exitoso
 				model.addAttribute("mensaje", "Pago completado y orden generada correctamente.");
 				model.addAttribute("orden", orden);
 				return "usuario/success";  // Redirige a una página de confirmación de pago
 			}
 		} catch (PayPalRESTException e) {
 			e.printStackTrace();
-			model.addAttribute("mensaje", "Error al procesar el pago.");
+			model.addAttribute("mensaje", "Error al procesar el pago."); // confirmar pago cancelado
 		}
 
 		return "redirect:/";
@@ -293,7 +292,7 @@ public class HomeController {
 		
 		return "usuario/resumenorden";
 	}
-
+	//mostrar resumen orden
 	@GetMapping("/resumenorden")
 	public String mostrarResumenOrden(HttpSession session, Model model) {
 		// Obtener el usuario a partir de la sesión
@@ -319,7 +318,7 @@ public class HomeController {
 		return "usuario/home";
 	}
 
-	//funcionalidad enviar mensaje a correo
+	//funcionalidad enviar mensaje a correo del admin
 	@PostMapping("/contacto/enviar")
 	@ResponseBody
 	public String enviarMensaje(@RequestParam String nombre,

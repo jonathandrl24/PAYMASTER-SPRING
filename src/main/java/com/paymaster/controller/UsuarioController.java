@@ -50,7 +50,7 @@ public class UsuarioController {
 		usuarioService.save(usuario);		
 		return "redirect:/";
 	}
-	
+	//login funcionalidad
 	@GetMapping("/login")
 	public String login() {
 		return "usuario/login";
@@ -79,7 +79,7 @@ public class UsuarioController {
 	}
 
 
-
+	// ver compras de servicios
 	@GetMapping("/compras")
 	public String obtenerCompras(Model model, HttpSession session) {
 		model.addAttribute("sesion", session.getAttribute("idusuario"));
@@ -104,7 +104,7 @@ public class UsuarioController {
 		model.addAttribute("sesion", session.getAttribute("idusuario"));
 		return "usuario/detallecompra";
 	}
-	
+	// cerrar sesion
 	@GetMapping("/cerrar")
 	public String cerrarSesion( HttpSession session ) {
 		session.removeAttribute("idusuario");

@@ -53,19 +53,19 @@ public class AdministradorController {
 		// Retorna vista home del admin
 		return "administrador/home";
 	}
-	
+	//Acceder a usuario
 	@GetMapping("/usuarios")
 	public String usuarios(Model model) {
 		model.addAttribute("usuarios", usuarioService.findAll());
 		return "administrador/usuarios";
 	}
-	
+	//Acceder a ordenes
 	@GetMapping("/ordenes")
 	public String ordenes(Model model) {
 		model.addAttribute("ordenes", ordensService.findAll());
 		return "administrador/ordenes";
 	}
-	
+	//Funcionalidad ver detalles
 	@GetMapping("/detalle/{id}")
 	public String detalle(Model model, @PathVariable Integer id) {
 		logg.info("Id de la orden {}",id);
