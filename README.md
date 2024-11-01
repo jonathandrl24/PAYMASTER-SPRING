@@ -1,6 +1,9 @@
 # PAYMASTER-SPRING
 
-Aplicación web spring boot Java maven- GESTION DE PAGOS Y PORTAL WEB PARA EMPRESA DE CONSTRUCCION - Proyecto
+Aplicación web spring boot Java maven- GESTION DE PAGOS Y PORTAL WEB PARA EMPRESA DE CONSTRUCCION - Proyecto SENA
+- Nombres: Jonathan David Rodriguez Lozada
+- ficha: (2758349) ANALISIS Y DESARROLLO DE SOFTWARE.
+- Link Github: https://github.com/jonathandrl24/PAYMASTER-SPRING  
 
 # Esta es una explicación sencilla que muestra la configuración predeterminada para ejecutar esta aplicación web con Thymeleaf Y Spring Boot.
 
@@ -38,7 +41,7 @@ Debe tener instalado en su máquina:
    - donde dice 3306 cambiarlo por el puerto que usted tiene configurado para MySQL
 
    - (OPCIONAL API PAYPAL):
-   - Dentro del application.properties , donde dice "paypal.client.id=" borre el client id escrito y escriba el suyo del modo sandbox del paypal developer
+   - Dentro del application.properties , donde dice "paypal.client.id=" borre el client id escrito y escriba el suyo del modo sandbox del paypal developer que se encuentra en la seccion de apps & credentials
    - como en el paso anterior, donde dice "paypal.client.secret=", borre el client secret que ya estaba escrito y escriba el suyo 
 
 
@@ -52,8 +55,20 @@ Debe tener instalado en su máquina:
     - llenar el formulario de registro
     - en workbench o en localhost/phpmyadmin, editar el nuevo usuario en donde dice 'tipo' cambiarle el valor de 'USER' a 'ADMIN'
     - al recargar la pagina e iniciar sesion con esa cuenta, deberia entrar a la pagina del administrador
+    - (en esta pagina admin, usted podra: crear, editar y eliminar los servicios en la parte de gestionar servicios, ver los pagos hechos por los usuarios, ver los detalles de los pagos, ver los usuarios 
+      registrados y descargar reporte de pagos en excel)
 
-6. para detener la aplicación: 
+6. (CREAR UNA COMPRA)
+    - registrarse
+    - iniciar sesion con la cuenta creada
+    - ir a servicios y escoger un servicio 
+    - darle click a contratar servicio, esto lo llevara al carrito
+    - darle click a pagar con paypal (se deberia abrir una pestaña de paypal)
+    - iniciar sesion en paypal con la cuenta que aparece en la pagina de paypal developer, esto esta en la seccion de testing tools donde dice sandbox accounts, darle click a la que termina en    
+      '@personal.example.com', copiar y pegar el email y el password y darle en continuar
+    - seguir los pasos, al final deberia salir una ventana que diga 'pago exitoso' y tanto en la base de datos como en las compras del usuario y en la pagina admin deberia salir el pago hecho.
+
+7. para detener la aplicación: 
    - dentro de la terminal, presione al mismo tiempo las teclas: control+c
 
 
