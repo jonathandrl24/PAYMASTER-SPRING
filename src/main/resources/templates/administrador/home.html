@@ -272,39 +272,61 @@
 	<script th:src="@{js/demo/chart-area-demo.js}"></script>
 	<script th:src="@{js/demo/chart-pie-demo.js}"></script>
 
-	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-			// Llama al endpoint para obtener las ganancias diarias
-			fetch('/administrador/ganancias/diarias?inicio=2024-10-01&fin=2025-12-30')
-					.then(response => response.json())
-					.then(data => {
-						const fechas = data.map(item => item.fecha);
-						const ganancias = data.map(item => item.ganancia);
+			<script>
+				document.addEventListener("DOMContentLoaded", function () {
+					// Función para calcular fechas dinámicas (últimos 31 días hasta hoy)
+					function calcularFechas() {
+						const fechaFin = new Date(); // Fecha de hoy
+						const fechaInicio = new Date();
+						fechaInicio.setDate(fechaFin.getDate() - 31); // Últimos 31 días
+						return {
+							inicio: fechaInicio.toISOString().split('T')[0],
+							fin: fechaFin.toISOString().split('T')[0]
+						};
+					}
 
-						// Configura y renderiza el gráfico
-						const ctx = document.getElementById('gananciasChart').getContext('2d');
-						new Chart(ctx, {
-							type: 'line',
-							data: {
-								labels: fechas,
-								datasets: [{
-									label: 'Ganancias Diarias',
-									data: ganancias,
-									borderColor: 'rgb(56,172,50)',
-									fill: false
-								}]
-							},
-							options: {
-								scales: {
-									x: { title: { display: true, text: 'Fecha' }},
-									y: { title: { display: true, text: 'Ganancia ($)' }}
-								}
-							}
-						});
-					})
-					.catch(error => console.error('Error obteniendo datos de ganancias:', error));
-		});
-	</script>
+					// Función para cargar el gráfico
+					function cargarGrafico() {
+						const fechas = calcularFechas();
+						fetch(`/administrador/ganancias/diarias?inicio=${fechas.inicio}&fin=${fechas.fin}`)
+								.then(response => response.json())
+								.then(data => {
+									const fechas = data.map(item => item.fecha);
+									const ganancias = data.map(item => item.ganancia);
+
+									// Configura y renderiza el gráfico
+									const ctx = document.getElementById('gananciasChart').getContext('2d');
+									new Chart(ctx, {
+										type: 'line',
+										data: {
+											labels: fechas,
+											datasets: [{
+												label: 'Ganancias Diarias',
+												data: ganancias,
+												borderColor: 'rgb(56,172,50)',
+												fill: false
+											}]
+										},
+										options: {
+											scales: {
+												x: {title: {display: true, text: 'Fecha'}},
+												y: {title: {display: true, text: 'Ganancia ($)'}}
+											}
+										}
+									});
+								})
+								.catch(error => console.error('Error obteniendo datos de ganancias:', error));
+					}
+
+					// Cargar el gráfico por primera vez
+					cargarGrafico();
+
+					// Configurar para actualizar el gráfico cada 31 días (en milisegundos)
+					setInterval(cargarGrafico, 31 * 24 * 60 * 60 * 100); // 31 días en ms
+				});
+			</script>
+
+
 
 
 </body>

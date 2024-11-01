@@ -2,6 +2,7 @@ package com.paymaster.controller;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -97,9 +98,16 @@ public class AdministradorController {
 			@RequestParam("inicio") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio,
 			@RequestParam("fin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFin) {
 
-		List<Map<String, Object>> gananciasDiarias = ordensService.calcularGananciasDiarias(fechaInicio, fechaFin);
+		//Esto ajusta la fecha de fin
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(fechaFin);
+		cal.add(Calendar.DAY_OF_MONTH, 2); // sumar un día para incluir el día de hoy
+		Date fechaFinAjustada = cal.getTime();
+
+		List<Map<String, Object>> gananciasDiarias = ordensService.calcularGananciasDiarias(fechaInicio, fechaFinAjustada);
 		return ResponseEntity.ok(gananciasDiarias);
 	}
+
 	//dashboard prototipo (inutilizado)
 	//@GetMapping("/dashboard")
 	//public String getDashboard(Model model) {
