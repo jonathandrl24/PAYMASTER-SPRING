@@ -9,7 +9,7 @@ Estas instrucciones le permitirán obtener una copia del proyecto en funcionamie
 
 # Requisitos previos:
 Debe tener instalado en su máquina:
-- JDK 
+- JDK 23 
 - apache tomcat
 - Maven 3 o posterior
 - Git
