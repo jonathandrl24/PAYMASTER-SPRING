@@ -32,7 +32,7 @@ Debe tener instalado en su máquina:
    y cambiarle el nombre al archivo "PayPalConfig" a "PaypalConfig" y repetir el mvn clean install, por alguna 
    razon al clonar el repositorio se modifica el nombre de ese archivo)
 
-2. *IMPORTANTE SI SU PUERTO DE MYSQL NO ES EL 3306,* Dentro del codigo:
+2. *IMPORTANTE SI SU PUERTO DE MYSQL NO ES EL 3306:
    - Ir a la carpeta (C:\Users\su_usuario\PAYMASTER-SPRING\src\main\resources)
    - dentro del archivo "application.properties" ubicar la siguiente linea: spring.datasource.url=jdbc:mysql://localhost:3306/paymaster
    - donde dice 3306 cambiarlo por el puerto que usted tiene configurado para MySQL
