@@ -22,10 +22,10 @@ Debe tener instalado en su máquina:
 
 1. En la terminal(cmd), escriba los siguientes 3 comandos:
 
-   `git clone https://github.com/jonathandrl24/PAYMASTER-SPRING`
-   `cd PAYMASTER-SPRING`
-   `mvn clean install` 
-   (si se tiene el error "[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project
+   - `git clone https://github.com/jonathandrl24/PAYMASTER-SPRING`
+   - `cd PAYMASTER-SPRING`
+   - `mvn clean install` 
+   - (si se tiene el error "[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project
    PAYMASTER-SPRING-BOOT: Compilation failure
    [ERROR] /C:/Users/jonathan/PAYMASTER-SPRING/src/main/java/com/paymaster/config/PayPalConfig.java:[16,8] class PaypalConfig is public, should be declared in a file named PaypalConfig.java" 
    Debera ir entonces a la siguiente ruta:"C:\Users\su_usuario\PAYMASTER-SPRING\src\main\java\com\paymaster\config"
