@@ -1,6 +1,6 @@
 # PAYMASTER-SPRING
 
-Aplicación web spring boot Java maven- GESTION DE PAGOS EMPRESA DE CONSTRUCCION - Proyecto
+Aplicación web spring boot Java maven- GESTION DE PAGOS Y PORTAL WEB PARA EMPRESA DE CONSTRUCCION - Proyecto
 
 # Esta es una explicación sencilla que muestra la configuración predeterminada para ejecutar esta aplicación web con Thymeleaf Y Spring Boot.
 
