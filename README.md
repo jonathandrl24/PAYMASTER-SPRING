@@ -22,7 +22,7 @@ Debe tener instalado en su máquina:
 - apache tomcat
 - Git
 - Mysql y workbench 
-- Xamp control panel v3.3.0 (darle click a 'start' en Apache y en MySQL)
+- Xamp control panel v3.3.0 (darle click al boton 'start' a Apache y a MySQL)
 ![image](https://github.com/user-attachments/assets/08d37dd0-54a2-4b4d-95f8-852755732350)
 - (en workbench es necesario ejecutar este simple script: `CREATE DATABASE paymaster;` )
   ![image](https://github.com/user-attachments/assets/65db2ad1-b34a-4045-a616-8e2c177025a1)
@@ -47,9 +47,14 @@ Debe tener instalado en su máquina:
    - Ir a la carpeta (C:\Users\su_usuario\PAYMASTER-SPRING\src\main\resources)
    - dentro del archivo "application.properties" ubicar la siguiente linea: spring.datasource.url=jdbc:mysql://localhost:3306/paymaster
    - donde dice 3306 cambiarlo por el puerto que usted tiene configurado para MySQL
+    ![image](https://github.com/user-attachments/assets/c0c5915f-cdc9-4891-9fc4-1a10524cb32d)
 
    - (OPCIONAL API PAYPAL):
    - Dentro del application.properties , donde dice "paypal.client.id=" borre el client id escrito y escriba el suyo del modo sandbox del paypal developer que se encuentra en la seccion de apps & credentials
+     ![hoal-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/4ce86135-1845-4d31-a638-315fcc473922)
+
+     ![image](https://github.com/user-attachments/assets/a708c48b-c69a-4fc0-b5e1-4c3a2868cf95)
+
    - como en el paso anterior, donde dice "paypal.client.secret=", borre el client secret que ya estaba escrito y escriba el suyo 
 
 
