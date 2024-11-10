@@ -27,7 +27,7 @@ Debe tener instalado en su máquina:
 - (en workbench es necesario ejecutar este simple script: `CREATE DATABASE paymaster;` )
   ![image](https://github.com/user-attachments/assets/65db2ad1-b34a-4045-a616-8e2c177025a1)
 
-- (OPCIONAL PARA API PAYPAL) tener una cuenta de paypal developer
+- (OPCIONAL PARA API PAYPAL) tener una cuenta de paypal developer: https://www.paypal.com/signin?intent=developer&returnUri=https%3A%2F%2Fdeveloper.paypal.com%2Fdashboard%2F
 
 # Pasos para ejecutar la aplicación:
 
@@ -88,9 +88,9 @@ Debe tener instalado en su máquina:
     - darle click a pagar con paypal (se deberia abrir una pestaña de paypal)
       ![image](https://github.com/user-attachments/assets/745415fb-7c7c-4bd0-970c-dcc847f9f5fc)
 
-    - iniciar sesion en paypal con la cuenta que aparece en la pagina de paypal developer, esto esta en la seccion de testing tools donde dice sandbox accounts, darle click a la que termina en    
-      '@personal.example.com', copiar y pegar el email y el password y darle en continuar
-      ![ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/8663e1b7-0c86-427d-b662-77ff5deab2af)
+    - iniciar sesion en paypal con la cuenta que aparece en la pagina de paypal developer: https://www.paypal.com/signin?intent=developer&returnUri=https%3A%2F%2Fdeveloper.paypal.com%2Fdashboard%2F , esto esta en la seccion de testing tools donde dice sandbox accounts, darle click a la que termina en    
+      '@personal.example.com', copiar y pegar el email y el password y darle click en iniciar sesion
+      ![Grabacin2024-11-10175624-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/37e2a11b-b583-4752-bf7a-0ee753bb95d0)
       ![image](https://github.com/user-attachments/assets/9a23651b-4960-46e8-957c-734882bef9ef)
 
     - seguir los pasos, al final deberia salir una ventana que diga 'pago exitoso' y tanto en la base de datos como en las compras del usuario y en la pagina admin deberia salir el pago hecho.
