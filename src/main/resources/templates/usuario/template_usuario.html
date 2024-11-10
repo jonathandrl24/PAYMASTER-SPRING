@@ -24,10 +24,11 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link" th:href="@{/#servicios}">Servicios</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/#contactForm}">Contacto</a></li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/usuario/login}">Login</a></li>
 				</ul>
 			</div>
-			<form class="d-flex" method="post" th:action="@{/search}">
+			<form class="d-flex" method="post" th:action="@{/search#servicios}">
 				<input class="form-control mr-sm-2" type="search"
 					   placeholder="Buscar" aria-label="Search" name="nombre"
 					   autocomplete="off">
@@ -52,6 +53,7 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link" th:href="@{/#servicios}">Servicios</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/#contactForm}">Contacto</a></li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/getCart}">Carrito</a></li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

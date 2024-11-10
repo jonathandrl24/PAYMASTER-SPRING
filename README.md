@@ -13,10 +13,15 @@ Estas instrucciones le permitirán obtener una copia del proyecto en funcionamie
 # Requisitos previos:
 Debe tener instalado en su máquina:
 - JDK 11
+- IDE Compatible: (IntelliJ IDEA (recomendado): Incluye soporte nativo para Spring Boot.
+  Eclipse con Spring Tools Suite (STS): Si usas Eclipse, asegúrate de que tener el plugin STS instalado.
+  Visual Studio Code: Con extensiones de Java y Spring Boot.
+  NetBeans: También puede usarse, pero IntelliJ IDEA y Eclipse son más populares para Spring Boot.)
+- Apache Maven 3 o posterior
+- Spring Boot (Aunque no necesita instalarse por separado, el IDE debe poder manejar proyectos de Spring Boot. Maven descargará todas las dependencias necesarias.)
 - apache tomcat
-- Maven 3 o posterior
 - Git
-- Mysql y workbench (en workbench hay que ejecutar un simple script: "CREATE DATABASE paymaster;")
+- Mysql y workbench (en workbench hay que ejecutar un simple script: `CREATE DATABASE paymaster;`
 - Xamp control panel v3.3.0 (darle click a 'start' en Apache y en MySQL)
 
 - (OPCIONAL PARA API PAYPAL) tener una cuenta de paypal developer
