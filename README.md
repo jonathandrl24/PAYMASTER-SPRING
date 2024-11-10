@@ -21,9 +21,11 @@ Debe tener instalado en su máquina:
 - Spring Boot (Aunque no necesita instalarse por separado, el IDE debe poder manejar proyectos de Spring Boot. Maven descargará todas las dependencias necesarias.)
 - apache tomcat
 - Git
-- Mysql y workbench (en workbench es necesario ejecutar este simple script: `CREATE DATABASE paymaster;` )
+- Mysql y workbench 
 - Xamp control panel v3.3.0 (darle click a 'start' en Apache y en MySQL)
 ![image](https://github.com/user-attachments/assets/08d37dd0-54a2-4b4d-95f8-852755732350)
+- (en workbench es necesario ejecutar este simple script: `CREATE DATABASE paymaster;` )
+  ![image](https://github.com/user-attachments/assets/65db2ad1-b34a-4045-a616-8e2c177025a1)
 
 - (OPCIONAL PARA API PAYPAL) tener una cuenta de paypal developer
 
