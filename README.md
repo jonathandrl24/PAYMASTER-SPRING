@@ -23,6 +23,7 @@ Debe tener instalado en su máquina:
 - Git
 - Mysql y workbench (en workbench es necesario ejecutar este simple script: `CREATE DATABASE paymaster;` )
 - Xamp control panel v3.3.0 (darle click a 'start' en Apache y en MySQL)
+![image](https://github.com/user-attachments/assets/08d37dd0-54a2-4b4d-95f8-852755732350)
 
 - (OPCIONAL PARA API PAYPAL) tener una cuenta de paypal developer
 
