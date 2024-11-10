@@ -95,7 +95,7 @@ Debe tener instalado en su máquina:
 
     - seguir los pasos, al final deberia salir una ventana que diga 'pago exitoso' y tanto en la base de datos como en las compras del usuario y en la pagina admin deberia salir el pago hecho.
       ![image](https://github.com/user-attachments/assets/9fd4bfb5-9959-4395-a08d-93506e694760)
-      ![hola-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/8314a82c-9520-4ad1-85e0-c8ac5a8bef85)
+      ![hola-ezgif com-video-to-gif-converter (1)](https://github.com/user-attachments/assets/09d90a47-a6f8-4875-ab02-cee435d7002f)
   
 
 8. para detener la aplicación: 
