@@ -61,7 +61,7 @@ Debe tener instalado en su máquina:
    - Despues de eso simplemente hay que crear una contraseña de aplicacion y copiar y pegar esa contraseña en el archivo "application.properties" donde dice password, tambier cambiar el username por su correo electronico
   ![image](https://github.com/user-attachments/assets/3ebaac5a-fc4e-4bdd-8da5-432f68ce329f)
 
-   - ir al archivo "HomeController.java" que esta dentro de la carpeta "controller" y cambiar los valores del correo electronico:
+   - ir al archivo "HomeController.java" que esta dentro de la carpeta "controller" y cambiar los valores del correo electronico por el suyo:
      ![image](https://github.com/user-attachments/assets/1163c205-aa0c-481a-b159-6b4e78febf16)
 
 
