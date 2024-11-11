@@ -31,7 +31,7 @@ Debe tener instalado en su máquina:
 
 # Pasos para ejecutar la aplicación:
 
-1. En la terminal(cmd), escriba los siguientes 3 comandos:
+1. En la terminal(cmd), ejecutar los siguientes 3 comandos:
 
    - `git clone https://github.com/jonathandrl24/PAYMASTER-SPRING`
    - `cd PAYMASTER-SPRING`
@@ -65,7 +65,7 @@ Debe tener instalado en su máquina:
      ![image](https://github.com/user-attachments/assets/1163c205-aa0c-481a-b159-6b4e78febf16)
 
 
-3. para ejecutar la aplicación, escriba:
+3. para ejecutar la aplicación, ejecute el siguiente comando en la terminal:
    - `mvn spring-boot:run`
 
 4. para entrar a la app, ir al navegador de su preferencia y escribir en el buscador esto:
