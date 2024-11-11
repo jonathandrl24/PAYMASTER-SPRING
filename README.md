@@ -5,7 +5,7 @@ Aplicación web spring boot Java maven- GESTION DE PAGOS Y PORTAL WEB PARA EMPRE
 - ficha: (2758349) ANALISIS Y DESARROLLO DE SOFTWARE.
 - Link Github: https://github.com/jonathandrl24/PAYMASTER-SPRING  
 
-# Esta es una explicación sencilla que muestra la configuración predeterminada para ejecutar esta aplicación web con Thymeleaf Y Spring Boot.
+# Esta es una explicación sencilla que muestra la configuración predeterminada para ejecutar esta aplicación web con Thymeleaf, Bootstrap 5 Y Spring Boot.
 
 # Primeros pasos:
 Estas instrucciones le permitirán obtener una copia del proyecto en funcionamiento en su máquina local para fines de desarrollo y prueba.
