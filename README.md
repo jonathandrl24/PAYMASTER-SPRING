@@ -38,7 +38,7 @@ Debe tener instalado en su máquina:
    - `mvn clean install` 
    - (si se tiene el error "[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project
    PAYMASTER-SPRING-BOOT: Compilation failure
-   [ERROR] /C:/Users/jonathan/PAYMASTER-SPRING/src/main/java/com/paymaster/config/PayPalConfig.java:[16,8] class PaypalConfig is public, should be declared in a file named PaypalConfig.java" 
+   [ERROR] /C:/Users/(su_usuario)/PAYMASTER-SPRING/src/main/java/com/paymaster/config/PayPalConfig.java:[16,8] class PaypalConfig is public, should be declared in a file named PaypalConfig.java" 
    Debera ir entonces a la siguiente ruta:"C:\Users\su_usuario\PAYMASTER-SPRING\src\main\java\com\paymaster\config"
    y cambiarle el nombre al archivo "PayPalConfig" a "PaypalConfig" y repetir el mvn clean install, por alguna 
    razon al clonar el repositorio se modifica el nombre de ese archivo)
@@ -50,12 +50,12 @@ Debe tener instalado en su máquina:
     ![image](https://github.com/user-attachments/assets/c0c5915f-cdc9-4891-9fc4-1a10524cb32d)
 
    - (OPCIONAL API PAYPAL):
-   - Dentro del application.properties , donde dice "paypal.client.id=" borre el client id escrito y escriba el suyo del modo sandbox del paypal developer que se encuentra en la seccion de apps & credentials
+   - En la siguiente carpeta "C:\Users\(su_usuario)\PAYMASTER-SPRING\src\main\resources" Dentro del archivo "application.properties" , donde dice "paypal.client.id=" borre el client id escrito y escriba el suyo del modo sandbox de la pagina de paypal developer que se encuentra en la seccion de apps & credentials: https://developer.paypal.com/home/
      ![hoal-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/4ce86135-1845-4d31-a638-315fcc473922)
 
      ![image](https://github.com/user-attachments/assets/a708c48b-c69a-4fc0-b5e1-4c3a2868cf95)
 
-   - como en el paso anterior, donde dice "paypal.client.secret=", borre el client secret que ya estaba escrito y escriba el suyo 
+   - como en el paso anterior, donde dice "paypal.client.secret=", borre el client secret que ya estaba escrito y copie y pegue el suyo 
 
 
 3. para ejecutar la aplicación, escriba:
