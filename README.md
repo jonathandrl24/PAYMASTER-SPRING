@@ -58,7 +58,7 @@ Debe tener instalado en su máquina:
    - (PASO OPCIONAL PARA QUE EL USUARIO PUEDA ENVIAR MENSAJES AL CORREO DEL ADMINISTRADOR DESDE EL FORMULARIO DEL CONTACTO) primero es necesario configurar su cuenta de google para poder acceder a las contraseñas de aplicaciones
    ![contra-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/0342cc38-b0ee-4b58-b5eb-eb2ff1628a47)
 
-   - Despues de eso simplemente hay que crear una contraseña de aplicacion y copiar y pegar esa contraseña en el archivo "application.properties" donde dice password, tambier cambiar el username por su correo electronico
+   - Despues de eso simplemente hay que crear una contraseña de aplicacion y copiar y pegar esa contraseña en el archivo "application.properties" donde dice password, tambien cambiar el username por su correo electronico
   ![image](https://github.com/user-attachments/assets/3ebaac5a-fc4e-4bdd-8da5-432f68ce329f)
 
    - ir al archivo "HomeController.java" que esta dentro de la carpeta "controller" y cambiar los valores del correo electronico por el suyo:
