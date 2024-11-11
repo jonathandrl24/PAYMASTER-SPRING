@@ -50,12 +50,19 @@ Debe tener instalado en su máquina:
     ![image](https://github.com/user-attachments/assets/c0c5915f-cdc9-4891-9fc4-1a10524cb32d)
 
    - (OPCIONAL API PAYPAL):
-   - En la siguiente carpeta "C:\Users\(su_usuario)\PAYMASTER-SPRING\src\main\resources" Dentro del archivo "application.properties" , donde dice "paypal.client.id=" borre el client id escrito y escriba el suyo del modo sandbox de la pagina de paypal developer que se encuentra en la seccion de apps & credentials: https://developer.paypal.com/home/
+   - En la siguiente carpeta "C:\Users\(su_usuario)\PAYMASTER-SPRING\src\main\resources" Dentro del archivo "application.properties" , donde dice "paypal.client.id=" borre el client id escrito y escriba el suyo y tambien donde dice "paypal.client.secret=", borre el client secret que ya estaba escrito y copie y pegue el suyo del modo sandbox de la pagina de paypal developer que se encuentra en la seccion de apps & credentials: https://developer.paypal.com/home/
      ![hoal-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/4ce86135-1845-4d31-a638-315fcc473922)
 
      ![image](https://github.com/user-attachments/assets/a708c48b-c69a-4fc0-b5e1-4c3a2868cf95)
 
-   - como en el paso anterior, donde dice "paypal.client.secret=", borre el client secret que ya estaba escrito y copie y pegue el suyo 
+   - (PASO OPCIONAL PARA QUE EL USUARIO PUEDA ENVIAR MENSAJES AL CORREO DEL ADMINISTRADOR DESDE EL FORMULARIO DEL CONTACTO) primero es necesario configurar su cuenta de google para poder acceder a las contraseñas de aplicaciones
+   ![contra-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/0342cc38-b0ee-4b58-b5eb-eb2ff1628a47)
+
+   - Despues de eso simplemente hay que crear una contraseña de aplicacion y copiar y pegar esa contraseña en el archivo "application.properties" donde dice password, tambier cambiar el username por su correo electronico
+  ![image](https://github.com/user-attachments/assets/3ebaac5a-fc4e-4bdd-8da5-432f68ce329f)
+
+   - ir al archivo "HomeController.java" que esta dentro de la carpeta "controller" y cambiar los valores del correo electronico:
+     ![image](https://github.com/user-attachments/assets/1163c205-aa0c-481a-b159-6b4e78febf16)
 
 
 3. para ejecutar la aplicación, escriba:
