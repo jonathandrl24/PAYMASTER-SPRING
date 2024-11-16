@@ -36,11 +36,10 @@ Debe tener instalado en su máquina:
    - `git clone https://github.com/jonathandrl24/PAYMASTER-SPRING`
    - `cd PAYMASTER-SPRING`
 
-
 2. *IMPORTANTE SI SU PUERTO DE MYSQL NO ES EL 3306:
    - Ir a la carpeta (C:\Users\su_usuario\PAYMASTER-SPRING\src\main\resources)
    - dentro del archivo "application.properties" ubicar la siguiente linea: spring.datasource.url=jdbc:mysql://localhost:3306/paymaster
-   - donde dice 3306 cambiarlo por el puerto que usted tiene configurado para MySQL
+   - donde dice 3306 cambiarlo por el puerto que usted tiene configurado para MySQL, tambien cambiar el datasource.username y el datasource.password por los suyos
     ![image](https://github.com/user-attachments/assets/c0c5915f-cdc9-4891-9fc4-1a10524cb32d)
    - Dentro de la capeta "PAYMASTER-SPRING" Ejecutar el siguiente comando en la terminal `mvn clean install` 
    - (si se tiene el error "[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project
