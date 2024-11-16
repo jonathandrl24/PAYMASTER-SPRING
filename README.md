@@ -36,7 +36,7 @@ Debe tener instalado en su máquina:
    - `git clone https://github.com/jonathandrl24/PAYMASTER-SPRING`
    - `cd PAYMASTER-SPRING`
 
-2. *IMPORTANTE SI SU PUERTO DE MYSQL NO ES EL 3306:
+2. *IMPORTANTE, CONFIGURAR CONEXION A BASE DE DATOS:
    - Ir a la carpeta (C:\Users\su_usuario\PAYMASTER-SPRING\src\main\resources)
    - dentro del archivo "application.properties" ubicar la siguiente linea: spring.datasource.url=jdbc:mysql://localhost:3306/paymaster
    - donde dice 3306 cambiarlo por el puerto que usted tiene configurado para MySQL, tambien cambiar el datasource.username y el datasource.password por los suyos
