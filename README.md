@@ -27,7 +27,7 @@ Debe tener instalado en su máquina:
 - (en workbench es necesario ejecutar este simple script: `CREATE DATABASE paymaster;` )
   ![image](https://github.com/user-attachments/assets/65db2ad1-b34a-4045-a616-8e2c177025a1)
 
-- (OPCIONAL PARA API PAYPAL) tener una cuenta de paypal developer: https://www.paypal.com/signin?intent=developer&returnUri=https%3A%2F%2Fdeveloper.paypal.com%2Fdashboard%2F
+- (PARA API PAYPAL) tener una cuenta de paypal developer: https://www.paypal.com/signin?intent=developer&returnUri=https%3A%2F%2Fdeveloper.paypal.com%2Fdashboard%2F
 
 # Pasos para ejecutar la aplicación:
 
@@ -49,13 +49,13 @@ Debe tener instalado en su máquina:
    y cambiarle el nombre al archivo "PayPalConfig" a "PaypalConfig" y repetir el mvn clean install, por alguna 
    razon al clonar el repositorio se modifica el nombre de ese archivo)
 
-   - (OPCIONAL API PAYPAL):
+   - (PARA QUE FUNCIONE LA API DE PAYPAL):
    - En la siguiente carpeta "C:\Users\(su_usuario)\PAYMASTER-SPRING\src\main\resources" Dentro del archivo "application.properties" , donde dice "paypal.client.id=" borre el client id escrito y escriba el suyo y tambien donde dice "paypal.client.secret=", borre el client secret que ya estaba escrito y copie y pegue el suyo del modo sandbox de la pagina de paypal developer que se encuentra en la seccion de apps & credentials: https://developer.paypal.com/home/
      ![hoal-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/4ce86135-1845-4d31-a638-315fcc473922)
 
      ![image](https://github.com/user-attachments/assets/a708c48b-c69a-4fc0-b5e1-4c3a2868cf95)
 
-   - (PASO OPCIONAL PARA QUE EL USUARIO PUEDA ENVIAR MENSAJES AL CORREO DEL ADMINISTRADOR DESDE EL FORMULARIO DEL CONTACTO) primero es necesario configurar su cuenta de google para poder acceder a las contraseñas de aplicaciones
+   - (PASOS PARA QUE EL USUARIO PUEDA ENVIAR MENSAJES AL CORREO DEL ADMINISTRADOR DESDE EL FORMULARIO DEL CONTACTO) primero es necesario configurar su cuenta de google para poder acceder a las contraseñas de aplicaciones
    ![contra-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/0342cc38-b0ee-4b58-b5eb-eb2ff1628a47)
 
    - Despues de eso simplemente hay que crear una contraseña de aplicacion y copiar y pegar esa contraseña en el archivo "application.properties" donde dice password, tambien cambiar el username por su correo electronico
