@@ -31,23 +31,24 @@ Debe tener instalado en su máquina:
 
 # Pasos para ejecutar la aplicación:
 
-1. En la terminal(cmd), ejecutar los siguientes 3 comandos:
+1. En la terminal(cmd), ejecutar los siguientes 2 comandos:
 
    - `git clone https://github.com/jonathandrl24/PAYMASTER-SPRING`
    - `cd PAYMASTER-SPRING`
-   - `mvn clean install` 
-   - (si se tiene el error "[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project
-   PAYMASTER-SPRING-BOOT: Compilation failure
-   [ERROR] /C:/Users/(su_usuario)/PAYMASTER-SPRING/src/main/java/com/paymaster/config/PayPalConfig.java:[16,8] class PaypalConfig is public, should be declared in a file named PaypalConfig.java" 
-   Debera ir entonces a la siguiente ruta:"C:\Users\su_usuario\PAYMASTER-SPRING\src\main\java\com\paymaster\config"
-   y cambiarle el nombre al archivo "PayPalConfig" a "PaypalConfig" y repetir el mvn clean install, por alguna 
-   razon al clonar el repositorio se modifica el nombre de ese archivo)
+
 
 2. *IMPORTANTE SI SU PUERTO DE MYSQL NO ES EL 3306:
    - Ir a la carpeta (C:\Users\su_usuario\PAYMASTER-SPRING\src\main\resources)
    - dentro del archivo "application.properties" ubicar la siguiente linea: spring.datasource.url=jdbc:mysql://localhost:3306/paymaster
    - donde dice 3306 cambiarlo por el puerto que usted tiene configurado para MySQL
     ![image](https://github.com/user-attachments/assets/c0c5915f-cdc9-4891-9fc4-1a10524cb32d)
+   - Dentro de la capeta "PAYMASTER-SPRING" Ejecutar el siguiente comando en la terminal `mvn clean install` 
+   - (si se tiene el error "[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project
+   PAYMASTER-SPRING-BOOT: Compilation failure
+   [ERROR] /C:/Users/(su_usuario)/PAYMASTER-SPRING/src/main/java/com/paymaster/config/PayPalConfig.java:[16,8] class PaypalConfig is public, should be declared in a file named PaypalConfig.java" 
+   Debera ir entonces a la siguiente ruta:"C:\Users\su_usuario\PAYMASTER-SPRING\src\main\java\com\paymaster\config"
+   y cambiarle el nombre al archivo "PayPalConfig" a "PaypalConfig" y repetir el mvn clean install, por alguna 
+   razon al clonar el repositorio se modifica el nombre de ese archivo)
 
    - (OPCIONAL API PAYPAL):
    - En la siguiente carpeta "C:\Users\(su_usuario)\PAYMASTER-SPRING\src\main\resources" Dentro del archivo "application.properties" , donde dice "paypal.client.id=" borre el client id escrito y escriba el suyo y tambien donde dice "paypal.client.secret=", borre el client secret que ya estaba escrito y copie y pegue el suyo del modo sandbox de la pagina de paypal developer que se encuentra en la seccion de apps & credentials: https://developer.paypal.com/home/
